@@ -1,102 +1,120 @@
 /*----Declare color variables for light theme and dark theme*/
 :root {
-    --light-background: #F6FFD7;
-    --light-primary-color: #41A464;
-    --light-primary-color-dark: #003B3C;
-    --light-accent-color: #D6FFB7;
-    --light-primary-text: #212121;
-    --light-secondary-text: #757575;
-    --dark-background: #003B3C;
-    --dark-primary-color: #92D18A;
-    --dark-primary-color-dark: #41A464;
-    --dark-accent-color: #38726C;
-    --dark-primary-text: #FCFCFC;
-    --dark-secondary-text: #C4C4C4;
+  --light-background: #F6FFD7;
+  --light-primary-color: #41A464;
+  --light-primary-color-dark: #003B3C;
+  --light-accent-color: #D6FFB7;
+  --light-primary-text: #212121;
+  --light-secondary-text: #757575;
+  --dark-background: #003B3C;
+  --dark-primary-color: #92D18A;
+  --dark-primary-color-dark: #41A464;
+  --dark-accent-color: #38726C;
+  --dark-primary-text: #FCFCFC;
+  --dark-secondary-text: #C4C4C4;
 }
 
 .light-theme {
-    --theme-background: var(--light-background);
-    --navbar-footer: var(--light-accent-color);
-    --navbar-link: var(--light-primary-color);
-    --headings: var(--light-primary-color);
-    --primary-text: var(--light-primary-text);
-    --secondary-text: var(--light-primary-text);
-    --icons: var(--light-primary-color);
-    --btn-primary: var(--light-primary-color);
-    --btn-secondary: var(--light-secondary-text);
+  --theme-background: var(--light-background);
+  --navbar-footer: var(--light-accent-color);
+  --navbar-item: var(--light-primary-color);
+  --headings: var(--light-primary-color);
+  --primary-text: var(--light-primary-text);
+  --secondary-text: var(--light-secondary-text);
+  --icons: var(--light-primary-color);
+  --btn-primary: var(--light-primary-color);
+  --btn-secondary: var(--light-secondary-text);
 }
 
 .dark-theme {
-    --theme-background: var(--dark-background);
-    --navbar-footer: var(--dark-accent-color);
-    --navbar-link: var(--dark-primary-color);
-    --headings: var(--dark-primary-color);
-    --primary-text: var(--dark-primary-text);
-    --secondary-text: var(--dark-primary-text);
-    --icons: var(--dark-primary-color);
-    --btn-primary: var(--dark-primary-color);
-    --btn-secondary: var(--dark-secondary-text);
+  --theme-background: var(--dark-background);
+  --navbar-footer: var(--dark-accent-color);
+  --navbar-item: var(--dark-primary-color);
+  --headings: var(--dark-primary-color);
+  --primary-text: var(--dark-primary-text);
+  --secondary-text: var(--dark-secondary-text);
+  --icons: var(--dark-primary-color);
+  --btn-primary: var(--dark-primary-color);
+  --btn-secondary: var(--dark-secondary-text);
 }
 
 body {
-  background-color: var(--theme-background);
-  color: var(--primary-text);
-  font-family: ‘Montserrat’, sans-serif;
+background-color: var(--theme-background);
+color: var(--primary-text);
+font-family: ‘Montserrat’, sans-serif;
 }
 
 /*----Navbar*/
-span.icon-text {
-  font-size: .75rem;
-  color: var(--secondary-text);
+.navbar {
+background-color: var(--navbar-footer);
+color: var(--navbar-item)
+}
+
+span.navbar-text {
+font-size: .75rem;
+color: var(--navbar-item);
+padding-top: 0;
+padding-bottom: 0;
+}
+
+nav svg {
+fill: var(--navbar-item)
 }
 
 /* Theme switch toggle adapted from Matt Smith's Codepen */
 .theme-switch {
-  display: inline-block;
-  height: 2rem;
-  position: relative;
-  width: 3.75rem;;
+display: inline-block;
+height: 1.625rem;
+position: relative;
+width: 2.75rem;;
 }
 
 .theme-switch input {
-  display:none;
+display:none;
 }
 
 .slider {
-  background-color: #ccc;
-  bottom: 0;
-  cursor: pointer;
-  left: 0;
-  position: absolute;
-  right: 0;
-  top: 0;
-  transition: .4s;
+background-color: #ccc;
+bottom: 0;
+cursor: pointer;
+left: 0;
+position: absolute;
+right: 0;
+top: 0;
+transition: .4s;
 }
 
 .slider:before {
-  background-color: #fff;
-  bottom: 4px;
-  content: "";
-  height: 1.625rem;
-  left: 4px;
-  position: absolute;
-  transition: .4s;
-  width: 1.625rem;
+background-color: #fff;
+bottom: 4px;
+content: "";
+height: 1.15rem;
+left: 4px;
+position: absolute;
+transition: .4s;
+width: 1.15rem;
 }
 
 input:checked + .slider {
-  background-color: #66bb6a;
+background-color: var(--icons);
 }
 
 input:checked + .slider:before {
-  transform: translateX(1.625rem);
+transform: translateX(1.1rem);
 }
 
 .slider.round {
-  border-radius: 34px;
+border-radius: 34px;
 }
 
 .slider.round:before {
-  border-radius: 50%;
+border-radius: 50%;
 }
 /* end of theme switch toggle */
+
+/*----colors, buttons*/
+span.icon-text {
+  font-size: .75rem;
+  color: var(--secondary-text);
+  }
+  
