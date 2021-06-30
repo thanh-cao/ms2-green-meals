@@ -52,7 +52,7 @@
                         </a>
                     </li>
                     <li class="nav-item me-3">
-                        <a class="nav-link" href="grocery.html">
+                        <a class="nav-link active" href="grocery.html">
                             <!-- <img src="assets/icons/grocery.svg" aria-label="Grocery list" aria-hidden="true" width="40" height="40"/> -->
                             <svg xmlns="http://www.w3.org/2000/svg" id="outline" viewBox="0 0 512 512" width="40"
                                 height="40">
@@ -86,15 +86,48 @@
     </header>
 
     <main>
-        <div class="bg-success text-center">
-            <div class="p-4">
-                <h1 class="display-3 fw-bold">Eat green<br>one day<br>at a time</h1>
-                <p class="col-md-8 offset-md-2 fs-5">Green Meals helps you reach your plant-based diet goals easier with
-                    daily cooking inspirations, nutrition calculator, and grocery list. It randomly generates daily
-                    plant-based 3-meal plan based on your preferences and restrictions.</p>
-                <a href="recipe-randomizer.html" class="btn btn-primary btn-lg" type="button">Start</a>
+        <img src="assets/img/grocery-image.jpg" class="w-100 h-auto" alt="grocery neon sign">
+
+        <section>
+            <div class="grocery-list-wrapper">
+                <p class="w-75 text-center mx-auto"><small class="text-muted">Click Randomize buttons to fetch either a
+                        new whole day plan or on each meal to get a new suggestion for that specific meal.</small></p>
+
+                <div class="row g-0 align-items-start mb-2">
+                    <div class="offset-2 col-5">
+                        <h5>Items</h5>
+                    </div>
+                    <div class="col-3">
+                        <h5>Qty</h5>
+                    </div>
+                </div>
+
+                <!-- dynamic div to populate grocery list data -->
+                <div id="grocery-list-data">
+                    <div class="row g-0 align-items-start">
+                        <div class="col-2 text-center">
+                            <input type="checkbox">
+                        </div>
+                        <div class="col-5">
+                            <p class="grocery-item">Rolled oats</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="grocery-item-qty">1/3 cups</p>
+                        </div>
+                        <div class="col-2 ps-0">
+                            <i class="fas fa-edit"></i>
+                            <i class="fas fa-trash-alt"></i>
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <button class="btn btn-secondary btn-reset" type="reset">Reset list</button>
+                    </div>
+                </div>
+
             </div>
-        </div>
+
+        </section>
     </main>
 
     <footer class="position-absolute bottom-0 start-0 w-100 bg-info">
