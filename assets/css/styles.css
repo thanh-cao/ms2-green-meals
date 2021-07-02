@@ -1,6 +1,12 @@
 /*----Declare color variables for light theme and dark theme*/
 :root {
-  --light-background: #F6FFD7;
+  --background: #F6FFD7;
+  --primary-color: #41A464;
+  --primary-color-dark: #003B3C;
+  --accent-color: #D6FFB7;
+  --primary-text: #212121;
+  --secondary-text: #757575;
+  /* --light-background: #F6FFD7;
   --light-primary-color: #41A464;
   --light-primary-color-dark: #003B3C;
   --light-accent-color: #D6FFB7;
@@ -11,10 +17,10 @@
   --dark-primary-color-dark: #41A464;
   --dark-accent-color: #38726C;
   --dark-primary-text: #FCFCFC;
-  --dark-secondary-text: #C4C4C4;
+  --dark-secondary-text: #C4C4C4; */
 }
 
-.light-theme {
+/* .light-theme {
   --theme-background: var(--light-background);
   --navbar-footer: var(--light-accent-color);
   --navbar-item: var(--light-primary-color);
@@ -24,10 +30,10 @@
   --icons: var(--light-primary-color);
   --btn-primary: var(--light-primary-color);
   --btn-secondary: var(--light-secondary-text);
-}
+} */
 
 .dark-theme {
-  --theme-background: var(--dark-background);
+  /* --theme-background: var(--dark-background);
   --navbar-footer: var(--dark-accent-color);
   --navbar-item: var(--dark-primary-color);
   --headings: var(--dark-primary-color);
@@ -35,30 +41,36 @@
   --secondary-text: var(--dark-secondary-text);
   --icons: var(--dark-primary-color);
   --btn-primary: var(--dark-primary-color);
-  --btn-secondary: var(--dark-secondary-text);
+  --btn-secondary: var(--dark-secondary-text); */
+  --background: #003B3C;
+  --primary-color: #92D18A;
+  --primary-color-dark: #41A464;
+  --accent-color: #38726C;
+  --primary-text: #FCFCFC;
+  --secondary-text: #C4C4C4;
 }
 
 body {
-background-color: var(--theme-background);
+background-color: var(--background);
 color: var(--primary-text);
 font-family: ‘Montserrat’, sans-serif;
 }
 
 /*----Navbar*/
 .navbar {
-background-color: var(--navbar-footer);
-color: var(--navbar-item)
+background-color: var(--accent-color);
+color: var(--primary-color)
 }
 
 span.navbar-text {
 font-size: .75rem;
-color: var(--navbar-item);
+color: var(--primary-color);
 padding-top: 0;
 padding-bottom: 0;
 }
 
 nav svg {
-fill: var(--navbar-item)
+fill: var(--primary-color)
 }
 
 /* Theme switch toggle adapted from Matt Smith's Codepen */
@@ -96,7 +108,7 @@ width: 1.15rem;
 }
 
 input:checked + .slider {
-background-color: var(--icons);
+background-color: var(--primary-color);
 }
 
 input:checked + .slider:before {
@@ -111,6 +123,35 @@ border-radius: 34px;
 border-radius: 50%;
 }
 /* end of theme switch toggle */
+
+/*----footer*/
+footer {
+  background-color: var(--accent-color);
+}
+
+.footer-sponsor a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+.footer-sponsor a:hover {
+  color: var(--primary-color-dark);
+  transition: background-color 0.35s ease-in-out;
+}
+
+.social-links i {
+  color: white;
+  background-color: var(--primary-color);
+  border-radius: 50%;
+  width: 1.85rem;
+  height: 1.85rem;
+  padding: .7rem 0;
+  text-align: center;
+  line-height: 7px;
+}
+.social-links i:hover {
+  background-color: var(--primary-color-dark);
+  transition: background-color 0.35s ease-in-out;
+}
 
 /*----colors, buttons*/
 span.icon-text {
