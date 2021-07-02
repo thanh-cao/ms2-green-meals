@@ -1,9 +1,9 @@
 /*----Declare color variables for light theme and dark theme*/
 :root {
-  --background: #F6FFD7;
-  --primary-color: #41A464;
-  --primary-color-dark: #003B3C;
-  --accent-color: #D6FFB7;
+  --background: #f6ffd7;
+  --primary-color: #41a464;
+  --primary-color-dark: #003b3c;
+  --accent-color: #d6ffb7;
   --primary-text: #212121;
   --secondary-text: #757575;
   /* --light-background: #F6FFD7;
@@ -42,85 +42,85 @@
   --icons: var(--dark-primary-color);
   --btn-primary: var(--dark-primary-color);
   --btn-secondary: var(--dark-secondary-text); */
-  --background: #003B3C;
-  --primary-color: #92D18A;
-  --primary-color-dark: #41A464;
-  --accent-color: #38726C;
-  --primary-text: #FCFCFC;
-  --secondary-text: #C4C4C4;
+  --background: #003b3c;
+  --primary-color: #92d18a;
+  --primary-color-dark: #41a464;
+  --accent-color: #38726c;
+  --primary-text: #fcfcfc;
+  --secondary-text: #c4c4c4;
 }
 
 body {
-background-color: var(--background);
-color: var(--primary-text);
-font-family: ‘Montserrat’, sans-serif;
+  background-color: var(--background);
+  color: var(--primary-text);
+  font-family: ‘Montserrat’, sans-serif;
 }
 
 /*----Navbar*/
 .navbar {
-background-color: var(--accent-color);
-color: var(--primary-color)
+  background-color: var(--accent-color);
+  color: var(--primary-color);
 }
 
 span.navbar-text {
-font-size: .75rem;
-color: var(--primary-color);
-padding-top: 0;
-padding-bottom: 0;
+  font-size: 0.75rem;
+  color: var(--primary-color);
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
 nav svg {
-fill: var(--primary-color)
+  fill: var(--primary-color);
 }
 
 /* Theme switch toggle adapted from Matt Smith's Codepen */
 .theme-switch {
-display: inline-block;
-height: 1.625rem;
-position: relative;
-width: 2.75rem;;
+  display: inline-block;
+  height: 1.625rem;
+  position: relative;
+  width: 2.75rem;
 }
 
 .theme-switch input {
-display:none;
+  display: none;
 }
 
 .slider {
-background-color: #ccc;
-bottom: 0;
-cursor: pointer;
-left: 0;
-position: absolute;
-right: 0;
-top: 0;
-transition: .4s;
+  background-color: #ccc;
+  bottom: 0;
+  cursor: pointer;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transition: 0.4s;
 }
 
 .slider:before {
-background-color: #fff;
-bottom: 4px;
-content: "";
-height: 1.15rem;
-left: 4px;
-position: absolute;
-transition: .4s;
-width: 1.15rem;
+  background-color: #fff;
+  bottom: 4px;
+  content: "";
+  height: 1.15rem;
+  left: 4px;
+  position: absolute;
+  transition: 0.4s;
+  width: 1.15rem;
 }
 
 input:checked + .slider {
-background-color: var(--primary-color);
+  background-color: var(--primary-color);
 }
 
 input:checked + .slider:before {
-transform: translateX(1.1rem);
+  transform: translateX(1.1rem);
 }
 
 .slider.round {
-border-radius: 34px;
+  border-radius: 34px;
 }
 
 .slider.round:before {
-border-radius: 50%;
+  border-radius: 50%;
 }
 /* end of theme switch toggle */
 
@@ -144,7 +144,7 @@ footer {
   border-radius: 50%;
   width: 1.85rem;
   height: 1.85rem;
-  padding: .7rem 0;
+  padding: 0.7rem 0;
   text-align: center;
   line-height: 7px;
 }
@@ -154,8 +154,63 @@ footer {
 }
 
 /*----colors, buttons*/
+h1,
+h2,
+h3,
+h4,
+h5 {
+  color: var(--primary-color);
+}
 span.icon-text {
-  font-size: .75rem;
+  font-size: 0.75rem;
   color: var(--secondary-text);
-  }
-  
+}
+.btn-primary {
+  background-color: var(--primary-color);
+  border-color: transparent;
+}
+
+.btn-primary:hover,
+.btn-primary:active {
+  background-color: var(--primary-color-dark);
+  border-color: transparent;
+}
+
+.btn-secondary {
+  background-color: white;
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+.btn-secondary:hover {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+/*----index page */
+.hero-wrapper {
+  background: url("../img/index-background.jpg") center center / cover no-repeat;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-wrapper:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgb(255, 255, 255);
+  opacity: 0.7;
+  z-index: -1;
+}
+
+.hero-heading {
+  color: var(--primary-color-dark);
+  font-family: Merienda, sans-serif;
+  font-size: 3rem;
+}
