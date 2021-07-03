@@ -14,7 +14,7 @@
     <title>Green Meals</title>
 </head>
 
-<body class="min-vh-100 m-0 p-0 light-theme">
+<body class="vh-100 m-0 p-0 d-flex flex-column"> 
     <header>
         <nav class="navbar justify-content-around py-0">
             <a class="navbar-brand" href="index.html">
@@ -67,12 +67,12 @@
         </nav>
     </header>
 
-    <main>
+    <main class="flex-grow-1">
         <img src="assets/img/grocery-image.jpg" class="w-100 h-auto" alt="grocery neon sign">
 
         <section>
             <div class="grocery-list-wrapper">
-                <p class="w-75 text-center mx-auto"><small class="text-muted">Click Randomize buttons to fetch either a new whole day plan or on each meal to get a new suggestion for that specific meal.</small></p>
+                <p class="w-75 text-center mx-auto"><small class="text-muted">This grocery list is based on your chosen meal plan. Check an item to cross it to keep track while shopping, edit the quantity, or delete if you don't need to buy that item.</small></p>
 
                 <div class="row g-0 align-items-start mb-2">
                     <div class="offset-2 col-5">
@@ -102,7 +102,7 @@
                     </div>
 
                     <div class="text-center mt-4">
-                        <button class="btn btn-secondary btn-reset" type="reset">Reset list</button>
+                        <button class="btn btn-reset" type="reset">Reset list</button>
                     </div>
                 </div>
 
