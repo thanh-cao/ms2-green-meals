@@ -161,6 +161,11 @@ h4,
 h5 {
   color: var(--primary-color);
 }
+
+.text-muted {
+  color: var(--secondary-text)!important;
+}
+
 span.icon-text {
   font-size: 0.75rem;
   color: var(--secondary-text);
@@ -187,6 +192,30 @@ span.icon-text {
   border-color: var(--primary-color);
   color: white;
 }
+#nutrient-breakdown-total {
+  background-color: var(--primary-color);
+}
+
+.fat-color {
+  color: #f3d441;
+}
+.carbs-color {
+  color: #091f92;
+} 
+.protein-color {
+  color: #8a0606;
+}
+
+div[data-diet],
+div[data-intolerance] {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+.selected {
+  background-color: var(--accent-color);
+  clip-path: inset(0 10% round 10px);  
+}
+
 /*----index page */
 .hero-wrapper {
   background: url("../img/index-background.jpg") center center / cover no-repeat;
