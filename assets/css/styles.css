@@ -76,11 +76,11 @@ nav svg {
   width: 1.15rem;
 }
 
-input:checked + .slider {
+.theme-switch input:checked + .slider {
   background-color: var(--primary-color);
 }
 
-input:checked + .slider:before {
+.theme-switch input:checked + .slider:before {
   transform: translateX(1.1rem);
 }
 
