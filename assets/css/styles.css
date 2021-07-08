@@ -160,7 +160,9 @@ span.icon-text {
   color: var(--primary-color);
 }
 
-.btn-secondary:hover {
+.btn-secondary:hover,
+.btn-secondary:active,
+.btn-secondary:focus {
   background-color: var(--primary-color);
   border-color: var(--primary-color);
   color: white;

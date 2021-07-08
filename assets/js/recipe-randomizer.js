@@ -4,7 +4,7 @@ const mealPlanDisplay = $("#meal-plan-container");
 
 const dietPreferenceList = $('input[name="diet-preference"]');
 const intoleranceList = $('input[name="intolerances"]');
-let diet;
+let diet = [];
 let intolerances = [];
 
 const totalNutrientsDisplay = $("#total-nutrients-absolute");
@@ -20,12 +20,23 @@ dietPreferenceList.on("change", getUserDiet);
 intoleranceList.on("change", getUserIntolerances);
 userMealPreference.on("submit", e => {
   e.preventDefault();
+  randomizeMealPlan();
+});
+
+function randomizeMealPlan() {
   $('#meal-plan').removeClass('d-none');
   mealPlanDisplay.empty();
   totalNutrientsDisplay.empty();
   totalNutrientsChart.empty();
   fetchMealPlan();
-});
+}
+// reset button to clear all data
+$('button[type="reset"]').on('click', function() {
+  diet = '';
+  intolerances.splice(0);
+  mealListId.splice(0);
+  mealPlanDisplay.empty();
+})
 
 // functions to gather user's search query based on diet preference and intolerances and parse queries to API call
 function getUserDiet(e) {
@@ -86,7 +97,6 @@ function extractMealListId (mealList) {
 // functions to display search results on to page
 function writeMealPlan(mealListId) {
   let mealPlanHtml = "";
-
   $.each(mealListId, function(index, value) {
     $.ajax({
       url: `https://api.spoonacular.com/recipes/${value}/information?apiKey=${apiKey}&includeNutrition=true`,
@@ -97,9 +107,9 @@ function writeMealPlan(mealListId) {
       mealPlanHtml = `
       <div class="card mb-3">
           <div class="row row-cols-2 pt-3 pb-2">
-              <h3 class="col my-auto ps-4">Breakfast</h3>
+              <h3 class="col my-auto ps-4">${writeMealCardTitle(index)}</h3>
               <div class="col text-end pe-4">
-                  <button class="btn btn-secondary" onclick=""><i class="fas fa-random"></i></button>
+                  <button class="btn btn-secondary" onclick="findNewRecipe();"><i class="fas fa-random"></i></button>
               </div>
           </div>
           <div class="row g-0">
@@ -128,13 +138,20 @@ function writeMealPlan(mealListId) {
           </div>
       </div>
       `;
-      console.log(mealPlanHtml);
       mealPlanDisplay.append(mealPlanHtml);
-      console.log(mealPlanDisplay);
     });
   });
 };
 
+function writeMealCardTitle (index) {
+  if (index === 0) {
+    return 'Breakfast';
+  } else if (index === 1) {
+    return 'Lunch';
+  } else if (index === 2) {
+    return 'Dinner';
+  }
+}
 
 function writeTotalNutrientsBreakdown(nutrients) {
   let caloBreakdownHtml = "";
@@ -158,3 +175,7 @@ function writeTotalNutrientsBreakdown(nutrients) {
     `;
   totalNutrientsDisplay.append(caloBreakdownHtml);
 }
+
+// function findNewRecipe(
+
+// )
