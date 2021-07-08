@@ -125,12 +125,12 @@ function writeMealPlan(mealListId) {
                       </p>
                       <div class="row row-cols-2">
                           <div class="col text-center">
-                              <span class="border py-2 px-3 d-block mb-2">Calories: </span>
-                              <span class="border py-2 px-3 d-block">Fat: </span>
+                              <span class="border py-2 px-3 d-block mb-2">Calories: ${recipeData.nutrition.nutrients[0].amount}</span>
+                              <span class="border py-2 px-3 d-block">Fat: ${recipeData.nutrition.nutrients[1].amount}g</span>
                           </div>
                           <div class="col text-center">
-                              <span class="border py-2 px-3 d-block mb-2">Protein: </span>
-                              <span class="border py-2 px-3 d-block">Carbs: </span>
+                              <span class="border py-2 px-3 d-block mb-2">Protein: ${recipeData.nutrition.nutrients[8].amount}</span>
+                              <span class="border py-2 px-3 d-block">Carbs: ${recipeData.nutrition.nutrients[3].amount}</span>
                           </div>
                       </div>
                   </div>
