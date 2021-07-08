@@ -2,25 +2,29 @@
 const userMealPreference = $("#meal-preference");
 const mealPlanDisplay = $("#meal-plan-container");
 
-const dietPreferenceList = $('input[name="dietPreference"]');
+const dietPreferenceList = $('input[name="diet-preference"]');
 const intoleranceList = $('input[name="intolerances"]');
-let diet = [];
+let diet;
 let intolerances = [];
 
 const totalNutrientsDisplay = $("#total-nutrients-absolute");
 const totalNutrientsChart = $("#total-nutrients-chart");
 
-const apiKey = "1f698cd1ba074580acc428ca007720bc";
+// const myapiKey = "1f698cd1ba074580acc428ca007720bc";
+const apiKey = "09c17d8e03d043c49e345a14a780221e";
+
+let mealListId = [];
 
 // gather search query and then fetch data through API call
 dietPreferenceList.on("change", getUserDiet);
 intoleranceList.on("change", getUserIntolerances);
 userMealPreference.on("submit", e => {
   e.preventDefault();
+  $('#meal-plan').removeClass('d-none');
   mealPlanDisplay.empty();
   totalNutrientsDisplay.empty();
   totalNutrientsChart.empty();
-  fetchMealPlanAPI();
+  fetchMealPlan();
 });
 
 // functions to gather user's search query based on diet preference and intolerances and parse queries to API call
@@ -37,7 +41,6 @@ function getUserDiet(e) {
 function getUserIntolerances(e) {
   if (this.checked) {
     intolerances.push(this.labels[0].innerText);
-    // intolerances.push($(this).attr("id"));
     console.log(intolerances);
   } else {
     intolerances.splice(intolerances.indexOf(this.labels[0].innerText), 1);
@@ -46,39 +49,69 @@ function getUserIntolerances(e) {
   return intolerances;
 }
 
-function fetchMealPlanAPI() {
-  $.ajax({
-    url: `https://api.spoonacular.com/mealplanner/generate?apiKey=${apiKey}&timeFrame=day&diet=${diet}&exclude=${intolerances.toString()}&type=main%20course,side%20dish,dessert,appetizer,salad,bread,breakfast,soup,fingerfood,snack`,
+function fetchMealPlan() {
+  $.when(
+    $.ajax({
+    url: `https://api.spoonacular.com/mealplanner/generate?apiKey=${apiKey}&timeFrame=day&diet=${diet.toLowerCase()}&exclude=${intolerances.toString()}&type=main%20course,side%20dish,dessert,appetizer,salad,bread,breakfast,soup,fingerfood,snack`,
     method: "GET"
-  }).done(function(results) {
+  })).then(function(results) {
     console.log(results);
-    writeMealPlan(results.meals);
+    console.log(results.meals);
+    console.log(results.nutrients);
+    let mealList = results.meals;
+    extractMealListId(mealList);
     writeTotalNutrientsBreakdown(results.nutrients);
-  });
+  }).done(function () {
+    console.log(mealListId);
+    writeMealPlan(mealListId);
+  })
+}
+
+function extractMealListId (mealList) {
+  mealListId = [];
+  // for (let meal of mealList) {
+  //   console.log(meal.id);
+  //   mealListId.push(meal.id);
+  //   console.log(mealListId);
+  // }
+  $.each(mealList, function (index, value) {
+    console.log(value);
+    console.log(value.id);
+    mealListId.push(value.id);
+    console.log(mealListId);
+  })
+  return mealListId;
 }
 
 // functions to display search results on to page
-function writeMealPlan(meals) {
+function writeMealPlan(mealListId) {
   let mealPlanHtml = "";
-  meals.map(meal => {
-    mealPlanHtml += `
+
+  $.each(mealListId, function(index, value) {
+    $.ajax({
+      url: `https://api.spoonacular.com/recipes/${value}/information?apiKey=${apiKey}&includeNutrition=true`,
+      method: 'GET'
+    }).done(function(recipeData) {
+      console.log(recipeData);
+      console.log(recipeData.image);
+      mealPlanHtml = `
       <div class="card mb-3">
           <div class="row row-cols-2 pt-3 pb-2">
               <h3 class="col my-auto ps-4">Breakfast</h3>
               <div class="col text-end pe-4">
-                  <a href="#meal-plan" class="btn btn-secondary"><i class="fas fa-random"></i></a>
+                  <button class="btn btn-secondary" onclick=""><i class="fas fa-random"></i></button>
               </div>
           </div>
           <div class="row g-0">
               <div class="col-md-4 my-auto">
-                  <img src="" class="w-100 h-auto px-3" alt="${meal.title}">
+                  <img src="${(recipeData.image)}" class="w-100 h-auto px-3" alt="${recipeData.title}">
               </div>
               <div class="col-md-8">
                   <div class="card-body">
-                      <h4 class="card-title">${meal.title}</h4>
+                      <h4 class="card-title">${recipeData.title}</h4>
                       <p class="card-text">
-                          <small class="text-muted">Ready in: ${meal.readyInMinutes} minutes</small>
-                          <small class="text-muted float-end">Servings: ${meal.servings}</small>
+                          <small class="text-muted">Ready in: ${recipeData.readyInMinutes} minutes</small>
+                          <small class="text-muted float-end">Servings: ${recipeData.servings}</small>
                       </p>
                       <div class="row row-cols-2">
                           <div class="col text-center">
@@ -95,9 +128,13 @@ function writeMealPlan(meals) {
           </div>
       </div>
       `;
+      console.log(mealPlanHtml);
+      mealPlanDisplay.append(mealPlanHtml);
+      console.log(mealPlanDisplay);
+    });
   });
-  mealPlanDisplay.append(mealPlanHtml);
-}
+};
+
 
 function writeTotalNutrientsBreakdown(nutrients) {
   let caloBreakdownHtml = "";
