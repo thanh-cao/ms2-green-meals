@@ -4,7 +4,7 @@ const mealPlanDisplay = $("#meal-plan-container");
 
 const dietPreferenceList = $('input[name="diet-preference"]');
 const intoleranceList = $('input[name="intolerances"]');
-let diet = [];
+let diet = 'vegetarian'; // make vegetarian as a default diet preference to give a visual hint to users that they can click and choose
 let intolerances = [];
 
 const totalNutrientsDisplay = $("#total-nutrients-absolute");
@@ -74,6 +74,7 @@ function fetchMealPlan() {
       console.log(results.nutrients);
       let mealList = results.meals;
       extractMealListId(mealList);
+      drawTotalCaloricBreakdownChart(results.nutrients);
       writeTotalNutrientsBreakdown(results.nutrients);
     })
     .done(function () {
@@ -193,4 +194,47 @@ function writeTotalNutrientsBreakdown(nutrients) {
       </div>
     `;
   totalNutrientsDisplay.append(caloBreakdownHtml);
+}
+
+function drawTotalCaloricBreakdownChart(nutrients) {
+  let ctx = $('#total-nutrients-chart');
+  let carbsCalories = nutrients.carbohydrates * 4 / nutrients.calories * 100;
+  let proteinCalories = nutrients.protein * 4 / nutrients.calories * 100;
+  let fatCalories = nutrients.fat * 9 / nutrients.calories * 100;
+
+  let totalCaloricChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels: ['Carbs', 'Fat', 'Protein'],
+      datasets: [{
+        label: 'Caloric Breakdown',
+        data: [Number(carbsCalories), Number(fatCalories), Number(proteinCalories)],
+        backgroundColor: [
+          'rgb(138, 6, 6)',
+          'rgb(243, 212, 65)',
+          'rgb(9, 31, 146)'
+        ],
+        borderColor: [
+          'white',
+          'white',
+          'white'
+        ],
+        borderWidth: 1,
+        hoverOffset: 3
+      }]
+    },
+    options: {
+      responsive: false,
+      plugins: {
+        legend: {
+          display: false
+        },
+        title: {
+          display: true,
+          text: 'Caloric percentage breakdown',
+          color: 'white'
+        }
+      },
+    }
+  })
 }
