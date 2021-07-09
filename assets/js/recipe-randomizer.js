@@ -208,21 +208,22 @@ function drawTotalCaloricBreakdownChart(nutrients) {
       labels: ['Carbs', 'Fat', 'Protein'],
       datasets: [{
         label: 'Caloric Breakdown',
-        data: [Number(carbsCalories), Number(fatCalories), Number(proteinCalories)],
+        data: [Math.round(Number(carbsCalories)), Math.round(Number(fatCalories)), Math.round(Number(proteinCalories))],
         backgroundColor: [
           'rgb(138, 6, 6)',
           'rgb(243, 212, 65)',
           'rgb(9, 31, 146)'
         ],
         borderColor: [
-          'white',
-          'white',
-          'white'
+          'rgb(255, 255, 255)',
+          'rgb(255, 255, 255)',
+          'rgb(255, 255, 255)'
         ],
         borderWidth: 1,
         hoverOffset: 3
       }]
     },
+    plugins: [ChartDataLabels],
     options: {
       responsive: false,
       plugins: {
@@ -232,7 +233,10 @@ function drawTotalCaloricBreakdownChart(nutrients) {
         title: {
           display: true,
           text: 'Caloric percentage breakdown',
-          color: 'white'
+          color: 'rgb(255, 255, 255)'
+        },
+        datalabels: {
+          color: 'rgb(255, 255, 255)',
         }
       },
     }
