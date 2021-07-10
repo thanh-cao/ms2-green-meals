@@ -194,6 +194,15 @@ span.icon-text {
   color: #8a0606;
 }
 
+.section-card-wrapper {
+  background-color: var(--card);
+  margin: 1rem 1rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  box-shadow: rgb(50 50 93 / 25%) 0px 13px 27px -5px,
+    rgb(0 0 0 / 30%) 0px 8px 16px -8px;
+}
+
 /*----index page */
 .hero-wrapper {
   background: url("../img/index-background.jpg") center center / cover no-repeat;
@@ -223,17 +232,8 @@ span.icon-text {
 }
 
 /*----grocery page*/
-.grocery-list-wrapper {
-  background-color: var(--card);
-  margin: 1rem 1rem;
-  padding-top: 2rem;
-  padding-bottom: 2rem;
-  box-shadow: rgb(50 50 93 / 25%) 0px 13px 27px -5px,
-    rgb(0 0 0 / 30%) 0px 8px 16px -8px;
-}
-
 @media (min-width: 768px) {
-  .grocery-list-wrapper {
+  .section-card-wrapper.grocery {
     width: 80%;
     margin-left: auto;
     margin-right: auto;
@@ -264,4 +264,31 @@ form input:checked + label {
   border: 1rem solid var(--accent-color);
   /* width: 100px;
   height: 100px; */
+}
+
+/*----recipe details page*/
+ul > li {
+  text-decoration: none;
+  display: block;
+  position: relative;
+}
+
+hr {
+  border-top: 1px solid var(--primary-color);
+  width: 90%;
+}
+
+@media (min-width: 768px) {
+  .recipe-ingredients, 
+  .recipe-instructions {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media (min-width: 992px) {
+  .recipe-nutrient-breakdown {
+    border-left: 1px solid var(--primary-color);
+  }
 }
