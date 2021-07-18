@@ -29,3 +29,7 @@ function loadFromLocalStorage(dataName) {
   //retrieve json string and parse it back to javascript object
   return JSON.parse(localStorage.getItem(dataName));
 }
+
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
