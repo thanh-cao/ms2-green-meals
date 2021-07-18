@@ -11,19 +11,20 @@ const totalNutrientsDisplay = $("#total-nutrients-absolute");
 const totalNutrientsChart = $("#total-nutrients-chart");
 
 const apiKey = "1f698cd1ba074580acc428ca007720bc";
-// const apiKey2 = "09c17d8e03d043c49e345a14a780221e";
+const apiKey2 = "09c17d8e03d043c49e345a14a780221e"; // backup apiKey for use when daily quota is exceeded
 
 let mealListId = [];
 
+// event listeners
 // gather search query and then fetch data through API call
 dietPreferenceList.on("change", getUserDiet);
 intoleranceList.on("change", getUserIntolerances);
 userMealPreference.on("submit", e => {
   e.preventDefault();
-  handleUserPreferences();
+  handleUserMealPreferences();
 });
 
-function handleUserPreferences() {
+function handleUserMealPreferences() {
   $("#meal-plan").removeClass("d-none");
   mealPlanDisplay.empty();
   totalNutrientsDisplay.empty();
@@ -64,7 +65,7 @@ function getUserIntolerances(e) {
 function fetchMealPlan() {
   $.when(
     $.ajax({
-      url: `https://api.spoonacular.com/mealplanner/generate?apiKey=${apiKey}&timeFrame=day&diet=${diet.toLowerCase()}&exclude=${intolerances.toString()}&type=breakfast,lunch,dinner`,
+      url: `https://api.spoonacular.com/mealplanner/generate?apiKey=${apiKey}&timeFrame=day&diet=${diet.toLowerCase()}&exclude=${intolerances.toString()},drinks,beverages,alcohol`,
       method: "GET"
     })
   )
@@ -118,18 +119,19 @@ function writeMealPlan(mealListId) {
     })
     .then(dataArray => {
       console.log(dataArray);
+      saveToLocalStorage('mealPlanData', dataArray);
       dataArray.forEach(data => {
         console.log(data.id);
         let mealCardHtml = "";
         mealCardHtml = `
       <div class="card mb-3">
           <div class="row row-cols-2 pt-3 pb-2">
-              <h3 class="col my-auto ps-4 meal-card-title">${writeMealCardTitle(dataArray.indexOf(data))}</h3>
+              <h3 class="col my-auto ps-4 meal-type-title">${writeMealCardTitle(dataArray.indexOf(data))}</h3>
               <div class="col text-end pe-4">
                   <button class="btn btn-secondary find-new-meal-btn"><i class="fas fa-random"></i></button>
               </div>
           </div>
-          <div class="row g-0 meal-card-data">
+          <a class="row g-0 meal-card-data" href="recipe-details.html" id="${data.id}">
               <div class="col-md-4 my-auto">
                   <img src="${data.image}" class="w-100 h-auto px-3" alt="${data.title}">
               </div>
@@ -152,11 +154,12 @@ function writeMealPlan(mealListId) {
                       </div>
                   </div>
               </div>
-          </div>
+          </a>
       </div>
       `;
         mealPlanDisplay.append(mealCardHtml);
       });
+      viewRecipeDetails();
     })
     .catch(err => {
       console.log(err);
@@ -240,5 +243,16 @@ function drawTotalCaloricBreakdownChart(nutrients) {
         }
       },
     }
+  })
+}
+
+// function to add 'click' event listener for meal card to store meal ID being clicked in order to load the correct data at recipe-details page
+function viewRecipeDetails() {
+  $('.meal-card-data').each(function() {
+    $(this).click(function() {
+      console.log('card is clicked');
+      console.log(this.id);
+      saveToLocalStorage('recipeIdToDisplay', this.id);
+    })
   })
 }

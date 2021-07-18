@@ -203,6 +203,21 @@ span.icon-text {
     rgb(0 0 0 / 30%) 0px 8px 16px -8px;
 }
 
+a.meal-card-data {
+  text-decoration: none;
+  color: inherit;
+  transition: border 0.15s ease-in-out;
+}
+
+.card-body:hover {
+  border: solid 2px var(--primary-color);
+}
+
+.card-body:hover .card-title {
+  text-decoration: underline;
+  text-decoration-color: var(--primary-color); 
+}
+
 /*----index page */
 .hero-wrapper {
   background: url("../img/index-background.jpg") center center / cover no-repeat;
