@@ -55,18 +55,12 @@ function generateIngredientList(recipeData) {
     return ingredientRows;
 }
 
-function writeNutrientsAbsolute(nutrient, amount) {
-    $(`.${nutrient}`).each(function () {
-        $(this).text(amount);
-    })
-}
-
 function drawCaloricBreakdownChart(nutrients) {
     let ctx = $('.recipe-nutrients-chart');
     let carbsCalories = nutrients.percentCarbs;
     let proteinCalories = nutrients.percentProtein;
     let fatCalories = nutrients.percentFat;
-    
+
     const data = {
         labels: ['Carbs', 'Fat', 'Protein'],
         datasets: [{

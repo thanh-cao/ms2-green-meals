@@ -27,7 +27,7 @@ userMealPreference.on("submit", e => {
 function handleUserMealPreferences() {
   $("#meal-plan").removeClass("d-none");
   mealPlanDisplay.empty();
-  totalNutrientsDisplay.empty();
+  // totalNutrientsDisplay.empty();
   totalNutrientsChart.empty();
   fetchMealPlan();
 }
@@ -76,7 +76,10 @@ function fetchMealPlan() {
       let mealList = results.meals;
       extractMealListId(mealList);
       drawTotalCaloricBreakdownChart(results.nutrients);
-      writeTotalNutrientsBreakdown(results.nutrients);
+      writeNutrientsAbsolute('calories', results.nutrients.calories);
+      writeNutrientsAbsolute('protein', results.nutrients.protein);
+      writeNutrientsAbsolute('fat', results.nutrients.fat);
+      writeNutrientsAbsolute('carbs', results.nutrients.carbohydrates);
     })
     .done(function () {
       console.log(mealListId);
@@ -174,29 +177,6 @@ function writeMealCardTitle(index) {
   } else if (index === 2) {
     return "Dinner";
   }
-}
-
-function writeTotalNutrientsBreakdown(nutrients) {
-  let caloBreakdownHtml = "";
-  caloBreakdownHtml += `
-      <div class="clearfix">
-          <div class="nutrient-key d-inline-block text-end w-50 me-2 text-white">Calories:</div>
-          <div class="nutrient-value d-inline-block w-25 text-start text-white">${nutrients.calories}</div>
-      </div>
-      <div class="clearfix">
-          <div class="nutrient-key protein-color d-inline-block text-end w-50 me-2">Protein:</div>
-          <div class="nutrient-value protein-color d-inline-block w-25 text-start">${nutrients.protein}</div>
-      </div>
-      <div class="clearfix">
-          <div class="nutrient-key fat-color d-inline-block text-end w-50 me-2">Fat:</div>
-          <div class="nutrient-value fat-color d-inline-block w-25 text-start">${nutrients.fat}</div>
-      </div>
-      <div class="clearfix">
-          <div class="nutrient-key carbs-color d-inline-block text-end w-50 me-2">Carbs:</div>
-          <div class="nutrient-value carbs-color d-inline-block w-25 text-start">${nutrients.carbohydrates}</div>
-      </div>
-    `;
-  totalNutrientsDisplay.append(caloBreakdownHtml);
 }
 
 function drawTotalCaloricBreakdownChart(nutrients) {

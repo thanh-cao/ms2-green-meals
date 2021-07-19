@@ -1,3 +1,5 @@
+// main.js file contains functions that can be used throughout all the pages
+
 // light/dark theme toggle
 const themeToggle = $('.theme-switch input[type="checkbox"]');
 const themePreference = loadFromLocalStorage("theme");
@@ -32,4 +34,11 @@ function loadFromLocalStorage(dataName) {
 
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+// function to write nutrients' absolute value which can be used in recipe-randomizer.html and recipe-details.html
+function writeNutrientsAbsolute(nutrient, amount) {
+  $(`.${nutrient}`).each(function() {
+      return $(this).text(amount);
+  })
 }
