@@ -14,7 +14,7 @@
     <title>Green Meals</title>
 </head>
 
-<body>
+<body class="vh-100 m-0 p-0 d-flex flex-column">
     <header>
         <nav class="navbar justify-content-around py-0">
             <a class="navbar-brand" href="index.html">
@@ -69,7 +69,7 @@
         </nav>
     </header>
 
-    <main>
+    <main class="flex-grow-1">
         <!-- diet preference and intolerance selection -->
         <section class="container py-3">
             <form id="meal-preference">
@@ -286,9 +286,7 @@
                 <div id="nutrient-breakdown-total" class="col-12 col-lg-5">
                     <h5 class="text-uppercase text-center text-white pt-3">Total Caloric Breakdown</h5>
                     <div class="row py-3 text-center">
-                        <div class="col-6 col-lg-12 mb-lg-4">
-                            <canvas id="total-nutrients-chart" width="200" height="200"></canvas>
-                        </div>
+                        <div class="col-6 col-lg-12 mb-lg-4 chart-container"></div>
                         <div id="total-nutrients-absolute" class="col-6 col-lg-12 mx-auto my-auto">
                             <div class="clearfix">
                                 <div class="nutrient-key d-inline-block text-end w-50 me-2 text-white">Calories:</div>

@@ -75,7 +75,7 @@ function fetchMealPlan() {
       console.log(results.nutrients);
       let mealList = results.meals;
       extractMealListId(mealList);
-      drawTotalCaloricBreakdownChart(results.nutrients);
+      drawCaloricBreakdownChart(results.nutrients, 'mealPlanData');
       writeNutrientsAbsolute('calories', results.nutrients.calories);
       writeNutrientsAbsolute('protein', results.nutrients.protein);
       writeNutrientsAbsolute('fat', results.nutrients.fat);
@@ -91,7 +91,6 @@ function extractMealListId(mealList) {
   //empty previous mealListId array and then assign a new one for new meal plan
   mealListId = [];
   $.each(mealList, function (index, value) {
-    console.log(value);
     console.log(value.id);
     mealListId.push(value.id);
     console.log(mealListId);
@@ -151,8 +150,8 @@ function writeMealPlan(mealListId) {
                               <span class="border py-2 px-3 d-block">Fat: ${data.nutrition.nutrients[1].amount}g</span>
                           </div>
                           <div class="col text-center">
-                              <span class="border py-2 px-3 d-block mb-2">Protein: ${data.nutrition.nutrients[8].amount}</span>
-                              <span class="border py-2 px-3 d-block">Carbs: ${data.nutrition.nutrients[3].amount}</span>
+                              <span class="border py-2 px-3 d-block mb-2">Protein: ${data.nutrition.nutrients[8].amount}g</span>
+                              <span class="border py-2 px-3 d-block">Carbs: ${data.nutrition.nutrients[3].amount}g</span>
                           </div>
                       </div>
                   </div>
@@ -179,52 +178,6 @@ function writeMealCardTitle(index) {
   }
 }
 
-function drawTotalCaloricBreakdownChart(nutrients) {
-  let ctx = $('#total-nutrients-chart');
-  let carbsCalories = nutrients.carbohydrates * 4 / nutrients.calories * 100;
-  let proteinCalories = nutrients.protein * 4 / nutrients.calories * 100;
-  let fatCalories = nutrients.fat * 9 / nutrients.calories * 100;
-
-  let totalCaloricChart = new Chart(ctx, {
-    type: 'pie',
-    data: {
-      labels: ['Carbs', 'Fat', 'Protein'],
-      datasets: [{
-        label: 'Caloric Breakdown',
-        data: [Math.round(Number(carbsCalories)), Math.round(Number(fatCalories)), Math.round(Number(proteinCalories))],
-        backgroundColor: [
-          'rgb(138, 6, 6)',
-          'rgb(243, 212, 65)',
-          'rgb(9, 31, 146)'
-        ],
-        borderColor: [
-          'rgb(255, 255, 255)',
-          'rgb(255, 255, 255)',
-          'rgb(255, 255, 255)'
-        ],
-        borderWidth: 1,
-        hoverOffset: 3
-      }]
-    },
-    plugins: [ChartDataLabels],
-    options: {
-      responsive: false,
-      plugins: {
-        legend: {
-          display: false
-        },
-        title: {
-          display: true,
-          text: 'Caloric percentage breakdown',
-          color: 'rgb(255, 255, 255)'
-        },
-        datalabels: {
-          color: 'rgb(255, 255, 255)',
-        }
-      },
-    }
-  })
-}
 
 // function to add 'click' event listener for meal card to store meal ID being clicked in order to load the correct data at recipe-details page
 function viewRecipeDetails() {

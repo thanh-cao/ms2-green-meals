@@ -21,7 +21,7 @@ $(window).ready(function () {
     writeNutrientsAbsolute('protein', recipeData.nutrition.nutrients[8].amount);
     writeNutrientsAbsolute('fat', recipeData.nutrition.nutrients[1].amount);
     writeNutrientsAbsolute('carbs', recipeData.nutrition.nutrients[3].amount);
-    drawCaloricBreakdownChart(recipeData.nutrition.caloricBreakdown);
+    drawCaloricBreakdownChart(recipeData.nutrition.caloricBreakdown, 'recipeData');
 })
 
 function generateOrderedRecipeInstructions(recipeData) {
@@ -53,57 +53,4 @@ function generateIngredientList(recipeData) {
         `;
     })
     return ingredientRows;
-}
-
-function drawCaloricBreakdownChart(nutrients) {
-    let ctx = $('.recipe-nutrients-chart');
-    let carbsCalories = nutrients.percentCarbs;
-    let proteinCalories = nutrients.percentProtein;
-    let fatCalories = nutrients.percentFat;
-
-    const data = {
-        labels: ['Carbs', 'Fat', 'Protein'],
-        datasets: [{
-            label: 'Caloric Breakdown',
-            data: [Number(carbsCalories), Number(fatCalories), Number(proteinCalories)],
-            backgroundColor: [
-                'rgb(138, 6, 6)',
-                'rgb(243, 212, 65)',
-                'rgb(9, 31, 146)'
-            ],
-            borderColor: [
-                'rgb(255, 255, 255)',
-                'rgb(255, 255, 255)',
-                'rgb(255, 255, 255)'
-            ],
-            borderWidth: 1,
-            hoverOffset: 3
-        }]
-    };
-
-    const config = {
-        type: 'pie',
-        data: data,
-        plugins: [ChartDataLabels],
-        options: {
-            responsive: false,
-            plugins: {
-                legend: {
-                    display: false
-                },
-                title: {
-                    display: true,
-                    text: 'Caloric percentage breakdown',
-                    color: 'rgb(255, 255, 255)'
-                },
-                datalabels: {
-                    color: 'rgb(255, 255, 255)',
-                }
-            },
-        }
-    };
-
-    ctx.each(function () {
-        let caloricChart = new Chart($(this), config, data);
-    })
 }

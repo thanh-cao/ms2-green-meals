@@ -36,9 +36,72 @@ function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-// function to write nutrients' absolute value which can be used in recipe-randomizer.html and recipe-details.html
+// functions to write nutrients' absolute value and draw caloric breakdown pie chart which can be used in recipe-randomizer.html and recipe-details.html
 function writeNutrientsAbsolute(nutrient, amount) {
   $(`.${nutrient}`).each(function() {
-      return $(this).text(amount);
+      $(this).text(''); // clear previous data
+      return $(this).text(amount); // write new data
+  })
+}
+
+function drawCaloricBreakdownChart(nutrients, dataType) {
+  let caloricChart, carbsCalories, proteinCalories, fatCalories;
+  
+  const data = {
+    labels: ['Carbs', 'Fat', 'Protein'],
+    datasets: [{
+      label: 'Caloric Breakdown',
+      data: [Math.round(Number(carbsCalories)), Math.round(Number(fatCalories)), Math.round(Number(proteinCalories))],
+      backgroundColor: [
+        'rgb(138, 6, 6)',
+        'rgb(243, 212, 65)',
+        'rgb(9, 31, 146)'
+      ],
+      borderColor: [
+        'rgb(255, 255, 255)',
+        'rgb(255, 255, 255)',
+        'rgb(255, 255, 255)'
+      ],
+      borderWidth: 1,
+      hoverOffset: 3
+    }]
+  };
+
+  const config = {
+    type: 'pie',
+    data: data,
+    plugins: [ChartDataLabels],
+    options: {
+      responsive: false,
+      plugins: {
+        legend: {
+          display: false
+        },
+        title: {
+          display: true,
+          text: 'Caloric percentage breakdown',
+          color: 'rgb(255, 255, 255)'
+        },
+        datalabels: {
+          color: 'rgb(255, 255, 255)',
+        }
+      },
+    }
+  };
+
+  if (dataType === 'mealPlanData') {
+    carbsCalories = nutrients.carbohydrates * 4 / nutrients.calories * 100;
+    proteinCalories = nutrients.protein * 4 / nutrients.calories * 100;
+    fatCalories = nutrients.fat * 9 / nutrients.calories * 100;
+  } else if (dataType === 'recipeData') {
+    carbsCalories = nutrients.percentCarbs;
+    proteinCalories = nutrients.percentProtein;
+    fatCalories = nutrients.percentFat;
+  }
+
+  $('.chart-container').html('<canvas class="nutrients-chart" width="200" height="200"></canvas>');
+  let ctx = $('.nutrients-chart');
+  ctx.each(function() {
+    caloricChart = new Chart($(this), config);
   })
 }
