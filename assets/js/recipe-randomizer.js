@@ -10,8 +10,8 @@ let intolerances = [];
 const totalNutrientsDisplay = $("#total-nutrients-absolute");
 const totalNutrientsChart = $("#total-nutrients-chart");
 
-const apiKey = "1f698cd1ba074580acc428ca007720bc";
-const apiKey2 = "09c17d8e03d043c49e345a14a780221e"; // backup apiKey for use when daily quota is exceeded
+const apiKey2 = "1f698cd1ba074580acc428ca007720bc";
+const apiKey = "09c17d8e03d043c49e345a14a780221e"; // backup apiKey for use when daily quota is exceeded
 
 let mealListId = [];
 
@@ -33,7 +33,7 @@ function handleUserMealPreferences() {
 }
 // reset button to clear all data
 $('button[type="reset"]').on("click", function () {
-  diet = "";
+  diet = "vegetarian"; // by reset, make vegetarian as a default diet preference
   intolerances.splice(0);
   mealListId.splice(0);
   $("#meal-plan").addClass("d-none");
@@ -130,33 +130,10 @@ function writeMealPlan(mealListId) {
           <div class="row row-cols-2 pt-3 pb-2">
               <h3 class="col my-auto ps-4 meal-type-title">${writeMealCardTitle(dataArray.indexOf(data))}</h3>
               <div class="col text-end pe-4">
-                  <button class="btn btn-secondary find-new-meal-btn"><i class="fas fa-random"></i></button>
+                  <button class="btn btn-secondary find-new-meal-btn" onclick="findNewMeal();"><i class="fas fa-random"></i></button>
               </div>
           </div>
-          <a class="row g-0 meal-card-data" href="recipe-details.html" id="${data.id}">
-              <div class="col-md-4 my-auto">
-                  <img src="${data.image}" class="w-100 h-auto px-3" alt="${data.title}">
-              </div>
-              <div class="col-md-8">
-                  <div class="card-body">
-                      <h4 class="card-title">${data.title}</h4>
-                      <p class="card-text">
-                          <small class="text-muted">Ready in: ${data.readyInMinutes} minutes</small>
-                          <small class="text-muted float-end">Servings: ${data.servings}</small>
-                      </p>
-                      <div class="row row-cols-2">
-                          <div class="col text-center">
-                              <span class="border py-2 px-3 d-block mb-2">Calories: ${data.nutrition.nutrients[0].amount}</span>
-                              <span class="border py-2 px-3 d-block">Fat: ${data.nutrition.nutrients[1].amount}g</span>
-                          </div>
-                          <div class="col text-center">
-                              <span class="border py-2 px-3 d-block mb-2">Protein: ${data.nutrition.nutrients[8].amount}g</span>
-                              <span class="border py-2 px-3 d-block">Carbs: ${data.nutrition.nutrients[3].amount}g</span>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </a>
+          ${writeMealCard(data)}
       </div>
       `;
         mealPlanDisplay.append(mealCardHtml);
@@ -178,11 +155,41 @@ function writeMealCardTitle(index) {
   }
 }
 
+function writeMealCard(data) {
+  let mealCardHtml = '';
+  mealCardHtml += `
+    <a class="row g-0 meal-card-data" href="recipe-details.html" id="${data.id}">
+    <div class="col-md-4 my-auto">
+        <img src="${data.image}" class="w-100 h-auto px-3" alt="${data.title}">
+    </div>
+    <div class="col-md-8">
+        <div class="card-body">
+            <h4 class="card-title">${data.title}</h4>
+            <p class="card-text">
+                <small class="text-muted">Ready in: ${data.readyInMinutes} minutes</small>
+                <small class="text-muted float-end">Servings: ${data.servings}</small>
+            </p>
+            <div class="row row-cols-2">
+                <div class="col text-center">
+                    <span class="border py-2 px-3 d-block mb-2">Calories: ${data.nutrition.nutrients[0].amount}</span>
+                    <span class="border py-2 px-3 d-block">Fat: ${data.nutrition.nutrients[1].amount}g</span>
+                </div>
+                <div class="col text-center">
+                    <span class="border py-2 px-3 d-block mb-2">Protein: ${data.nutrition.nutrients[8].amount}g</span>
+                    <span class="border py-2 px-3 d-block">Carbs: ${data.nutrition.nutrients[3].amount}g</span>
+                </div>
+            </div>
+        </div>
+    </div>
+  </a>
+  `;
+  return mealCardHtml;
+}
 
 // function to add 'click' event listener for meal card to store meal ID being clicked in order to load the correct data at recipe-details page
 function viewRecipeDetails() {
-  $('.meal-card-data').each(function() {
-    $(this).click(function() {
+  $('.meal-card-data').each(function () {
+    $(this).click(function () {
       console.log('card is clicked');
       console.log(this.id);
       saveToLocalStorage('recipeIdToDisplay', this.id);

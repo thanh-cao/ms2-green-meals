@@ -47,6 +47,16 @@ function writeNutrientsAbsolute(nutrient, amount) {
 function drawCaloricBreakdownChart(nutrients, dataType) {
   let caloricChart, carbsCalories, proteinCalories, fatCalories;
   
+  if (dataType === 'mealPlanData') {
+    carbsCalories = nutrients.carbohydrates * 4 / nutrients.calories * 100;
+    proteinCalories = nutrients.protein * 4 / nutrients.calories * 100;
+    fatCalories = nutrients.fat * 9 / nutrients.calories * 100;
+  } else if (dataType === 'recipeData') {
+    carbsCalories = nutrients.percentCarbs;
+    proteinCalories = nutrients.percentProtein;
+    fatCalories = nutrients.percentFat;
+  }
+
   const data = {
     labels: ['Carbs', 'Fat', 'Protein'],
     datasets: [{
@@ -88,16 +98,6 @@ function drawCaloricBreakdownChart(nutrients, dataType) {
       },
     }
   };
-
-  if (dataType === 'mealPlanData') {
-    carbsCalories = nutrients.carbohydrates * 4 / nutrients.calories * 100;
-    proteinCalories = nutrients.protein * 4 / nutrients.calories * 100;
-    fatCalories = nutrients.fat * 9 / nutrients.calories * 100;
-  } else if (dataType === 'recipeData') {
-    carbsCalories = nutrients.percentCarbs;
-    proteinCalories = nutrients.percentProtein;
-    fatCalories = nutrients.percentFat;
-  }
 
   $('.chart-container').html('<canvas class="nutrients-chart" width="200" height="200"></canvas>');
   let ctx = $('.nutrients-chart');
