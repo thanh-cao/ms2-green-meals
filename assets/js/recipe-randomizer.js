@@ -76,10 +76,10 @@ function fetchMealPlan() {
       let mealList = results.meals;
       extractMealListId(mealList);
       drawCaloricBreakdownChart(results.nutrients, 'mealPlanData');
-      writeNutrientsAbsolute('calories', results.nutrients.calories);
-      writeNutrientsAbsolute('protein', results.nutrients.protein);
-      writeNutrientsAbsolute('fat', results.nutrients.fat);
-      writeNutrientsAbsolute('carbs', results.nutrients.carbohydrates);
+      writeNutrientsAbsolute('calories', results.nutrients, 'mealPlanData');
+      writeNutrientsAbsolute('protein', results.nutrients, 'mealPlanData');
+      writeNutrientsAbsolute('fat', results.nutrients, 'mealPlanData');
+      writeNutrientsAbsolute('carbohydrates', results.nutrients, 'mealPlanData');
     })
     .done(function () {
       console.log(mealListId);
@@ -173,12 +173,12 @@ function writeMealCard(data) {
                 </p>
                 <div class="row row-cols-2">
                     <div class="col text-center">
-                        <span class="border py-2 px-3 d-block mb-2">Calories: ${data.nutrition.nutrients[0].amount}</span>
-                        <span class="border py-2 px-3 d-block">Fat: ${data.nutrition.nutrients[1].amount}g</span>
+                        <span class="border py-2 px-3 d-block mb-2">Calories: ${findNutrientAbsoluteData('calories', data.nutrition.nutrients, 'mealData')}</span>
+                        <span class="border py-2 px-3 d-block">Fat: ${findNutrientAbsoluteData('fat', data.nutrition.nutrients, 'mealData')}g</span>
                     </div>
                     <div class="col text-center">
-                        <span class="border py-2 px-3 d-block mb-2">Protein: ${data.nutrition.nutrients[8].amount}g</span>
-                        <span class="border py-2 px-3 d-block">Carbs: ${data.nutrition.nutrients[3].amount}g</span>
+                        <span class="border py-2 px-3 d-block mb-2">Protein: ${findNutrientAbsoluteData('protein', data.nutrition.nutrients, 'mealData')}g</span>
+                        <span class="border py-2 px-3 d-block">Carbs: ${findNutrientAbsoluteData('carbohydrates', data.nutrition.nutrients, 'mealData')}g</span>
                     </div>
                 </div>
             </div>

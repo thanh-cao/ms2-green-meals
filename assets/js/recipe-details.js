@@ -17,11 +17,11 @@ $(window).ready(function () {
     $('.recipe-img').attr('src', recipeData.image);
     $('.recipe-img').attr('alt', recipeData.title);
     $('.recipe-instructions').html(recipeInstructions);
-    writeNutrientsAbsolute('calories', recipeData.nutrition.nutrients[0].amount);
-    writeNutrientsAbsolute('protein', recipeData.nutrition.nutrients[8].amount);
-    writeNutrientsAbsolute('fat', recipeData.nutrition.nutrients[1].amount);
-    writeNutrientsAbsolute('carbs', recipeData.nutrition.nutrients[3].amount);
-    drawCaloricBreakdownChart(recipeData.nutrition.caloricBreakdown, 'recipeData');
+    writeNutrientsAbsolute('calories', recipeData.nutrition.nutrients, 'mealData');
+    writeNutrientsAbsolute('protein', recipeData.nutrition.nutrients, 'mealData');
+    writeNutrientsAbsolute('fat', recipeData.nutrition.nutrients, 'mealData');
+    writeNutrientsAbsolute('carbohydrates', recipeData.nutrition.nutrients, 'mealData');
+    drawCaloricBreakdownChart(recipeData.nutrition.caloricBreakdown, 'mealData');
 })
 
 function generateOrderedRecipeInstructions(recipeData) {
@@ -54,3 +54,33 @@ function generateIngredientList(recipeData) {
     })
     return ingredientRows;
 }
+
+// function to add to list in localStorage
+// when the button is clicked, declare an ingredientArray and push in new arrays of ingredients
+// let ingredientArray = [];
+// recipeData.extendedIngredients.forEach(ingredient => {
+//     ingredientArray.push([ingredient.name, ingredient.amount, ingredient.unit]);         
+// })
+// 
+// save that ingredient array to localStorage
+//
+// need to check if localStorage already have some ingredient list saved in there
+// if yes, load from storage and save as a variable
+// when button is clicked, create a new ingredient array and then add it to the loaded variable and then save
+
+// var a = [];
+// a.push(JSON.parse(localStorage.getItem('session')));
+// localStorage.setItem('session', JSON.stringify(a));
+
+// function SaveDataToLocalStorage(data)
+// {
+//     var a = [];
+//     // Parse the serialized data back into an aray of objects
+//     a = JSON.parse(localStorage.getItem('session')) || [];
+//     // Push the new data (whether it be an object or anything else) onto the array
+//     a.push(data);
+//     // Alert the array value
+//     alert(a);  // Should be something like [Object array]
+//     // Re-serialize the array back into a string and store it in localStorage
+//     localStorage.setItem('session', JSON.stringify(a));
+// }

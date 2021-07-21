@@ -37,21 +37,33 @@ function capitalizeFirstLetter(string) {
 }
 
 // functions to write nutrients' absolute value and draw caloric breakdown pie chart which can be used in recipe-randomizer.html and recipe-details.html
-function writeNutrientsAbsolute(nutrient, amount) {
+function writeNutrientsAbsolute(nutrient, nutrientList, dataType) {
+  let amount = findNutrientAbsoluteData(nutrient, nutrientList, dataType);
   $(`.${nutrient}`).each(function() {
       $(this).text(''); // clear previous data
       return $(this).text(amount); // write new data
   })
 }
 
+function findNutrientAbsoluteData(nutrient, nutrientList, dataType) {
+  if (dataType === 'mealPlanData') {
+    console.log(`${nutrient} is ${nutrientList[nutrient]}`);
+    return nutrientList[nutrient];
+  } else if (dataType === 'mealData') {
+    let found = nutrientList.find(element => element.name === capitalizeFirstLetter(nutrient));
+    console.log(`${nutrient} is ${found.amount}`);
+    return found.amount;
+  }
+}
+
 function drawCaloricBreakdownChart(nutrients, dataType) {
   let caloricChart, carbsCalories, proteinCalories, fatCalories;
-  
+
   if (dataType === 'mealPlanData') {
     carbsCalories = nutrients.carbohydrates * 4 / nutrients.calories * 100;
     proteinCalories = nutrients.protein * 4 / nutrients.calories * 100;
     fatCalories = nutrients.fat * 9 / nutrients.calories * 100;
-  } else if (dataType === 'recipeData') {
+  } else if (dataType === 'mealData') {
     carbsCalories = nutrients.percentCarbs;
     proteinCalories = nutrients.percentProtein;
     fatCalories = nutrients.percentFat;
