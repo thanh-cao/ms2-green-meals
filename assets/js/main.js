@@ -39,9 +39,9 @@ function capitalizeFirstLetter(string) {
 // functions to write nutrients' absolute value and draw caloric breakdown pie chart which can be used in recipe-randomizer.html and recipe-details.html
 function writeNutrientsAbsolute(nutrient, nutrientList, dataType) {
   let amount = findNutrientAbsoluteData(nutrient, nutrientList, dataType);
-  $(`.${nutrient}`).each(function() {
-      $(this).text(''); // clear previous data
-      return $(this).text(amount); // write new data
+  $(`.${nutrient}`).each(function () {
+    $(this).text(''); // clear previous data
+    return $(this).text(amount); // write new data
   })
 }
 

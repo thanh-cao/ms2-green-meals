@@ -190,15 +190,16 @@ function writeMealCard(data) {
 
 // function to add 'click' event listener for meal card to store meal ID being clicked in order to load the correct data at recipe-details page
 function viewRecipeDetails() {
-  $('.meal-card-data').each(function () {
+  $('div.meal-card-data > a').each(function () {
     $(this).click(function () {
       console.log('card is clicked');
-      console.log(this.id);
-      saveToLocalStorage('recipeIdToDisplay', this.id);
+      console.log($(this).attr('id'));
+      saveToLocalStorage('recipeIdToDisplay', $(this).attr('id'));
     })
   })
 }
 
+// functions below to add click event to buttons to fetch new specific meal, and consequentially update nutrients data and caloric breakdown chart based on the new meal plan
 function findNewMeal(btn) {
   let retrievedMealPlan = loadFromLocalStorage('mealPlanData');
   console.log($(btn));
@@ -217,7 +218,8 @@ function findNewMeal(btn) {
     let newMeal = results[Math.floor(Math.random() * results.length)];
     console.log(`new meal id is: ${newMeal.id}`);
     saveToLocalStorage('newMeal', newMeal);
-    mealCardData.html(writeMealCard(newMeal));
+    mealCardData.html(writeMealCard(newMeal));  
+    viewRecipeDetails();  // update the fetch new meal button of the new meal
   }).done(function () {
     let newMealFromStorage = loadFromLocalStorage('newMeal');
     console.log(`new meal storage id is: ${newMealFromStorage.id}`);
@@ -225,4 +227,34 @@ function findNewMeal(btn) {
     console.log(retrievedMealPlan);
     saveToLocalStorage('mealPlanData', retrievedMealPlan);
   })
+  updateNewMealPlanNutrients();
+}
+
+function updateNewMealPlanNutrients() {
+  let newMealPlan = loadFromLocalStorage('mealPlanData');
+  let newTotalCarbs = 0, newTotalProtein = 0, newTotalFat = 0, newTotalCalories = 0;
+  let newMealPlanNutrients;
+
+  newMealPlan.forEach(meal => {
+    newTotalCarbs += findNutrientAbsoluteData('carbohydrates', meal.nutrition.nutrients, 'mealData');
+    newTotalProtein += findNutrientAbsoluteData('protein', meal.nutrition.nutrients, 'mealData');
+    newTotalFat += findNutrientAbsoluteData('fat', meal.nutrition.nutrients, 'mealData');
+    newTotalCalories += findNutrientAbsoluteData('calories', meal.nutrition.nutrients, 'mealData');
+  })
+  console.log(typeof newTotalCarbs);
+  console.log('new total carbs is: ' + newTotalCarbs);
+
+  newMealPlanNutrients = {
+    carbohydrates: `${Math.round(newTotalCarbs)}`,
+    protein: `${Math.round(newTotalProtein)}`,
+    fat: `${Math.round(newTotalFat)}`,
+    calories: `${Math.round(newTotalCalories)}`
+  };
+  console.log(newMealPlanNutrients);
+
+  drawCaloricBreakdownChart(newMealPlanNutrients, 'mealPlanData');
+  writeNutrientsAbsolute('calories', newMealPlanNutrients, 'mealPlanData');
+  writeNutrientsAbsolute('protein', newMealPlanNutrients, 'mealPlanData');
+  writeNutrientsAbsolute('fat', newMealPlanNutrients, 'mealPlanData');
+  writeNutrientsAbsolute('carbohydrates', newMealPlanNutrients, 'mealPlanData');
 }
