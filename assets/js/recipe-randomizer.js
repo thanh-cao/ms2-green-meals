@@ -10,8 +10,8 @@ let intolerances = [];
 const totalNutrientsDisplay = $("#total-nutrients-absolute");
 const totalNutrientsChart = $("#total-nutrients-chart");
 
-const apiKey2 = "1f698cd1ba074580acc428ca007720bc";
-const apiKey = "09c17d8e03d043c49e345a14a780221e"; // backup apiKey for use when daily quota is exceeded
+const apiKey = "1f698cd1ba074580acc428ca007720bc";
+const apiKey2 = "09c17d8e03d043c49e345a14a780221e"; // backup apiKey for use when daily quota is exceeded
 
 let mealListId = [];
 
@@ -130,10 +130,12 @@ function writeMealPlan(mealListId) {
           <div class="row row-cols-2 pt-3 pb-2">
               <h3 class="col my-auto ps-4 meal-type-title">${writeMealCardTitle(dataArray.indexOf(data))}</h3>
               <div class="col text-end pe-4">
-                  <button class="btn btn-secondary find-new-meal-btn" onclick="findNewMeal();"><i class="fas fa-random"></i></button>
+                  <button class="btn btn-secondary find-new-meal-btn" onclick="findNewMeal($(this));"><i class="fas fa-random"></i></button>
               </div>
           </div>
-          ${writeMealCard(data)}
+          <div class="meal-card-data">
+            ${writeMealCard(data)}
+          </div>
       </div>
       `;
         mealPlanDisplay.append(mealCardHtml);
@@ -157,32 +159,32 @@ function writeMealCardTitle(index) {
 
 function writeMealCard(data) {
   let mealCardHtml = '';
-  mealCardHtml += `
-    <a class="row g-0 meal-card-data" href="recipe-details.html" id="${data.id}">
-    <div class="col-md-4 my-auto">
-        <img src="${data.image}" class="w-100 h-auto px-3" alt="${data.title}">
-    </div>
-    <div class="col-md-8">
-        <div class="card-body">
-            <h4 class="card-title">${data.title}</h4>
-            <p class="card-text">
-                <small class="text-muted">Ready in: ${data.readyInMinutes} minutes</small>
-                <small class="text-muted float-end">Servings: ${data.servings}</small>
-            </p>
-            <div class="row row-cols-2">
-                <div class="col text-center">
-                    <span class="border py-2 px-3 d-block mb-2">Calories: ${data.nutrition.nutrients[0].amount}</span>
-                    <span class="border py-2 px-3 d-block">Fat: ${data.nutrition.nutrients[1].amount}g</span>
-                </div>
-                <div class="col text-center">
-                    <span class="border py-2 px-3 d-block mb-2">Protein: ${data.nutrition.nutrients[8].amount}g</span>
-                    <span class="border py-2 px-3 d-block">Carbs: ${data.nutrition.nutrients[3].amount}g</span>
+  mealCardHtml = `
+      <a class="row g-0" href="recipe-details.html" id="${data.id}">
+        <div class="col-md-4 my-auto">
+            <img src="${data.image}" class="w-100 h-auto px-3" alt="${data.title}">
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h4 class="card-title">${data.title}</h4>
+                <p class="card-text">
+                    <small class="text-muted">Ready in: ${data.readyInMinutes} minutes</small>
+                    <small class="text-muted float-end">Servings: ${data.servings}</small>
+                </p>
+                <div class="row row-cols-2">
+                    <div class="col text-center">
+                        <span class="border py-2 px-3 d-block mb-2">Calories: ${data.nutrition.nutrients[0].amount}</span>
+                        <span class="border py-2 px-3 d-block">Fat: ${data.nutrition.nutrients[1].amount}g</span>
+                    </div>
+                    <div class="col text-center">
+                        <span class="border py-2 px-3 d-block mb-2">Protein: ${data.nutrition.nutrients[8].amount}g</span>
+                        <span class="border py-2 px-3 d-block">Carbs: ${data.nutrition.nutrients[3].amount}g</span>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-  </a>
-  `;
+      </a>
+     `;
   return mealCardHtml;
 }
 
@@ -194,5 +196,33 @@ function viewRecipeDetails() {
       console.log(this.id);
       saveToLocalStorage('recipeIdToDisplay', this.id);
     })
+  })
+}
+
+function findNewMeal(btn) {
+  let retrievedMealPlan = loadFromLocalStorage('mealPlanData');
+  console.log($(btn));
+  let mealCardData = $(btn).parents('div.card div.row').next();
+  console.log(mealCardData);
+  console.log(`current meal is ${mealCardData[0].firstElementChild.id}`);
+  let oldMeal = retrievedMealPlan.find(meal => meal.id === Number(mealCardData[0].firstElementChild.id))
+  console.log(`old meal is: ${oldMeal.title} ${oldMeal.id}`);
+  mealCardData.empty();
+
+  $.ajax({
+    url: `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&diet=${diet}&intolerances=${intolerances.toString().toLowerCase()}&number=30&offset=3&addRecipeNutrition=true&type=${$(btn).closest('.meal-type-title').text().toLowerCase()}`,
+    method: "GET"
+  }).then(function (data) {
+    let results = data.results;
+    let newMeal = results[Math.floor(Math.random() * results.length)];
+    console.log(`new meal id is: ${newMeal.id}`);
+    saveToLocalStorage('newMeal', newMeal);
+    mealCardData.html(writeMealCard(newMeal));
+  }).done(function () {
+    let newMealFromStorage = loadFromLocalStorage('newMeal');
+    console.log(`new meal storage id is: ${newMealFromStorage.id}`);
+    retrievedMealPlan.splice(retrievedMealPlan.indexOf(oldMeal), 1, newMealFromStorage);
+    console.log(retrievedMealPlan);
+    saveToLocalStorage('mealPlanData', retrievedMealPlan);
   })
 }
