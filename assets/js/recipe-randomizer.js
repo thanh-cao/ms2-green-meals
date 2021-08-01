@@ -44,9 +44,8 @@ function getUserDiet(e) {
   if (this.checked) {
     diet = this.labels[0].innerText;
     console.log(diet);
-  } else {
-    console.log(diet);
   }
+  saveToLocalStorage('userDiet', diet);
   return diet;
 }
 
@@ -58,6 +57,7 @@ function getUserIntolerances(e) {
     intolerances.splice(intolerances.indexOf(this.labels[0].innerText), 1);
     console.log(intolerances);
   }
+  saveToLocalStorage('userIntolerances', intolerances);
   return intolerances;
 }
 
