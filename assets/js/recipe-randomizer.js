@@ -80,6 +80,7 @@ function fetchMealPlan() {
       writeNutrientsAbsolute('protein', results.nutrients, 'mealPlanData');
       writeNutrientsAbsolute('fat', results.nutrients, 'mealPlanData');
       writeNutrientsAbsolute('carbohydrates', results.nutrients, 'mealPlanData');
+      saveToLocalStorage('totalNutrientBreakdown', results.nutrients);
     })
     .done(function () {
       console.log(mealListId);
@@ -139,6 +140,7 @@ function writeMealPlan(mealListId) {
       </div>
       `;
         mealPlanDisplay.append(mealCardHtml);
+        saveToLocalStorage('mealPlanDisplay', mealPlanDisplay[0].outerHTML);
       });
       viewRecipeDetails();
     })
@@ -219,13 +221,14 @@ function findNewMeal(btn) {
     console.log(`new meal id is: ${newMeal.id}`);
     saveToLocalStorage('newMeal', newMeal);
     mealCardData.html(writeMealCard(newMeal));  
-    viewRecipeDetails();  // update the fetch new meal button of the new meal
+    viewRecipeDetails();
   }).done(function () {
     let newMealFromStorage = loadFromLocalStorage('newMeal');
     console.log(`new meal storage id is: ${newMealFromStorage.id}`);
     retrievedMealPlan.splice(retrievedMealPlan.indexOf(oldMeal), 1, newMealFromStorage);
     console.log(retrievedMealPlan);
     saveToLocalStorage('mealPlanData', retrievedMealPlan);
+    saveToLocalStorage('mealPlanDisplay', mealPlanDisplay[0].outerHTML);
   })
   updateNewMealPlanNutrients();
 }
@@ -251,6 +254,7 @@ function updateNewMealPlanNutrients() {
     calories: `${Math.round(newTotalCalories)}`
   };
   console.log(newMealPlanNutrients);
+  saveToLocalStorage('totalNutrientBreakdown', newMealPlanNutrients);
 
   drawCaloricBreakdownChart(newMealPlanNutrients, 'mealPlanData');
   writeNutrientsAbsolute('calories', newMealPlanNutrients, 'mealPlanData');

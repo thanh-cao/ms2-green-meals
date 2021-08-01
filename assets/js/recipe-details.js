@@ -24,6 +24,11 @@ $(window).ready(function () {
     drawCaloricBreakdownChart(recipeData.nutrition.caloricBreakdown, 'mealData');
 })
 
+$('.back-to-meal-plan').on('click', function() {
+    history.back();
+    saveToLocalStorage('loadMealPlan', 'true');
+})
+
 function generateOrderedRecipeInstructions(recipeData) {
     let stepsArray = recipeData.analyzedInstructions[0].steps;
     if (stepsArray) {
