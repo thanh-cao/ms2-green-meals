@@ -23,6 +23,21 @@ userMealPreference.on("submit", e => {
   e.preventDefault();
   handleUserMealPreferences();
 });
+// reset button to clear all data
+$('button[type="reset"]').on("click", function () {
+  diet = "vegetarian"; // by reset, make vegetarian as a default diet preference
+  intolerances.splice(0);
+  mealListId.splice(0);
+  $("#meal-plan").addClass("d-none");
+  // delete saved items in local storage
+  localStorage.removeItem('userDiet');
+  localStorage.removeItem('userIntolerances');
+  localStorage.removeItem('mealPlanData');
+  localStorage.removeItem('mealPlanDisplay');
+  localStorage.removeItem('totalNutrientBreakdown');
+  localStorage.removeItem('newMeal');
+  localStorage.removeItem('loadMealPlan');
+});
 
 function handleUserMealPreferences() {
   $("#meal-plan").removeClass("d-none");
@@ -31,13 +46,6 @@ function handleUserMealPreferences() {
   totalNutrientsChart.empty();
   fetchMealPlan();
 }
-// reset button to clear all data
-$('button[type="reset"]').on("click", function () {
-  diet = "vegetarian"; // by reset, make vegetarian as a default diet preference
-  intolerances.splice(0);
-  mealListId.splice(0);
-  $("#meal-plan").addClass("d-none");
-});
 
 // functions to gather user's search query based on diet preference and intolerances and parse queries to API call
 function getUserDiet(e) {
