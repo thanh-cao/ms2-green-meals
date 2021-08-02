@@ -8,7 +8,7 @@ $(window).ready(function () {
             itemRows += `
                 <div class="row g-0 align-items-start">
                     <div class="col-2 text-center">
-                        <input type="checkbox">
+                        <input class="item-checkbox" type="checkbox">
                     </div>
                     <div class="col-5">
                         <p class="grocery-item">${capitalizeFirstLetter(item[0])}</p>
@@ -25,4 +25,12 @@ $(window).ready(function () {
         });
         $('#grocery-list-data').append(itemRows);
     }
+
+    let checkboxes = $('.item-checkbox');
+    checkboxes.each(function() {
+        $(this).on('click', function() {
+            console.log($(this).parent().siblings());
+            $(this).parent().siblings().toggleClass('strikethrough');
+        })
+    })
 })
