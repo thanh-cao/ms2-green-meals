@@ -22,6 +22,39 @@ $(window).ready(function () {
     writeNutrientsAbsolute('fat', recipeData.nutrition.nutrients, 'mealData');
     writeNutrientsAbsolute('carbohydrates', recipeData.nutrition.nutrients, 'mealData');
     drawCaloricBreakdownChart(recipeData.nutrition.caloricBreakdown, 'mealData');
+
+    $('.add-to-list-btn').on('mousedown', function (e) {
+        e.preventDefault();  // remove button's :focus state on mousedown
+        let ingredientArray = [];
+    
+        recipeData.extendedIngredients.forEach(ingredient => {
+            ingredientArray.push([ingredient.name, ingredient.amount, ingredient.unit]);
+        });
+    
+        if (!loadFromLocalStorage('groceryList')) {
+            saveToLocalStorage('groceryList', ingredientArray);
+            $('.add-to-list-btn').text('Added');
+        } else {
+            let retrievedIngredientArray = loadFromLocalStorage('groceryList');
+            console.log(retrievedIngredientArray);
+    
+            if ($('.add-to-list-btn').text() === 'Add to grocery list') {
+                ('groceryList');
+                retrievedIngredientArray.push(...ingredientArray);
+                console.log(retrievedIngredientArray);
+                saveToLocalStorage('groceryList', retrievedIngredientArray);
+                $('.add-to-list-btn').text('Added');
+            } else {
+                console.log(retrievedIngredientArray);
+                console.log(ingredientArray);
+                console.log(retrievedIngredientArray.indexOf(ingredientArray[0]));
+                retrievedIngredientArray.splice(retrievedIngredientArray.indexOf(ingredientArray[0]));
+                console.log('New array ' + retrievedIngredientArray);
+                saveToLocalStorage('groceryList', retrievedIngredientArray);
+                $('.add-to-list-btn').text('Add to grocery list');
+            }
+        }
+    })
 })
 
 $('.back-to-meal-plan').on('click', function () {
@@ -61,36 +94,7 @@ function generateIngredientList(recipeData) {
         })
         return ingredientRows;
     } else {
+        $('.add-to-list-btn').hide();
         return `<p>Ingredient list can be found at <a href="${recipeData.sourceUrl}" target="_blank">${recipeData.sourceName}</a></p>`
     }
 }
-
-// function to add to list in localStorage
-// when the button is clicked, declare an ingredientArray and push in new arrays of ingredients
-// let ingredientArray = [];
-// recipeData.extendedIngredients.forEach(ingredient => {
-//     ingredientArray.push([ingredient.name, ingredient.amount, ingredient.unit]);         
-// })
-// 
-// save that ingredient array to localStorage
-//
-// need to check if localStorage already have some ingredient list saved in there
-// if yes, load from storage and save as a variable
-// when button is clicked, create a new ingredient array and then add it to the loaded variable and then save
-
-// var a = [];
-// a.push(JSON.parse(localStorage.getItem('session')));
-// localStorage.setItem('session', JSON.stringify(a));
-
-// function SaveDataToLocalStorage(data)
-// {
-//     var a = [];
-//     // Parse the serialized data back into an aray of objects
-//     a = JSON.parse(localStorage.getItem('session')) || [];
-//     // Push the new data (whether it be an object or anything else) onto the array
-//     a.push(data);
-//     // Alert the array value
-//     alert(a);  // Should be something like [Object array]
-//     // Re-serialize the array back into a string and store it in localStorage
-//     localStorage.setItem('session', JSON.stringify(a));
-// }
