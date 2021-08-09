@@ -2,7 +2,12 @@ $(window).ready(function () {
     let retrievedGroceryList = loadFromLocalStorage('groceryList');
     console.log(retrievedGroceryList);
 
-    if (retrievedGroceryList) {
+    if (!retrievedGroceryList) {
+        $('.section-card-wrapper.grocery').html(`
+        <h5 class="text-center">Grocery list is empty</h5>
+        <img src="assets/img/empty-grocery-list.jpg" class="w-100 h-auto" alt="Empty grocery cart">
+        `);
+    } else {
         let itemRows = '';
         retrievedGroceryList.forEach(item => {
             itemRows += `
@@ -44,10 +49,18 @@ $(window).ready(function () {
         })
     })
 
-    removeBtns.each(function() {
-        $(this).on('click', function() {
+    removeBtns.each(function () {
+        $(this).on('click', function () {
             console.log($(this).parents()[1]);
             $(this).parents()[1].remove();
         })
+    })
+
+    $('button.btn-reset').on('click', function () {
+        $('.section-card-wrapper.grocery').html(`
+        <h5 class="text-center">Grocery list is empty</h5>
+        <img src="assets/img/empty-grocery-list.jpg" class="w-100 h-auto" alt="Empty grocery cart">
+        `);
+        localStorage.removeItem('groceryList');
     })
 })
