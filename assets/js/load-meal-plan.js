@@ -3,25 +3,29 @@ $(window).ready(function () {
     if (loadFromLocalStorage('loadMealPlan') === 'true') {
         let mealPlanNutrients = loadFromLocalStorage('totalNutrientBreakdown');
         $("#meal-plan").removeClass("d-none");
+        diet = loadFromLocalStorage('userDiet');
         intolerances = loadFromLocalStorage('userIntolerances');
 
-        if (!loadFromLocalStorage('userDiet')) {
-            diet = 'vegetarian';
+        if (!diet) {
+            diet = 'vegetarian'; // set to default diet
             dietPreferenceList[0].checked = true;
         } else {
-            diet = loadFromLocalStorage('userDiet');
-            dietPreferenceList.each(function() {
-                if (this.id === loadFromLocalStorage('userDiet')) {
+            dietPreferenceList.each(function () {
+                if (this.id === diet) {
                     this.checked = true;
                 }
-            })    
+            })
         }
 
-        intoleranceList.each(function() {
-            if (intolerances.includes(capitalizeFirstLetter(this.id))) {
-                this.checked = true;
-            }
-        })
+        if (!intolerances) {
+            intolerances = []; // set to empty array as default to prevent intolerances variable being null
+        } else {
+            intoleranceList.each(function () {
+                if (intolerances.includes(capitalizeFirstLetter(this.id))) {
+                    this.checked = true;
+                }
+            })
+        }
 
         mealPlanDisplay.html(loadFromLocalStorage('mealPlanDisplay'));
         viewRecipeDetails();

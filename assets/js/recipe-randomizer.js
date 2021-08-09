@@ -148,7 +148,8 @@ function writeMealPlan(mealListId) {
       </div>
       `;
         mealPlanDisplay.append(mealCardHtml);
-        saveToLocalStorage('mealPlanDisplay', mealPlanDisplay[0].outerHTML);
+        saveToLocalStorage('loadMealPlan', 'true');
+        saveToLocalStorage('mealPlanDisplay', mealPlanDisplay[0].innerHTML);
       });
       viewRecipeDetails();
     })
