@@ -56,7 +56,15 @@ function findNutrientAbsoluteData(nutrient, nutrientList, dataType) {
   }
 }
 
+function getNutrientBackgroundColors() {
+  let carbsColor = getComputedStyle(document.body).getPropertyValue('--carbs-color');
+  let fatColor = getComputedStyle(document.body).getPropertyValue('--fat-color');
+  let proteinColor = getComputedStyle(document.body).getPropertyValue('--protein-color');
+  return [carbsColor, fatColor, proteinColor];
+}
+
 function drawCaloricBreakdownChart(nutrients, dataType) {
+  // compiling neccessary configs and data for pie chart
   let caloricChart, carbsCalories, proteinCalories, fatCalories;
 
   if (dataType === 'mealPlanData') {
@@ -74,11 +82,7 @@ function drawCaloricBreakdownChart(nutrients, dataType) {
     datasets: [{
       label: 'Caloric Breakdown',
       data: [Math.round(Number(carbsCalories)), Math.round(Number(fatCalories)), Math.round(Number(proteinCalories))],
-      backgroundColor: [
-        'rgb(138, 6, 6)',
-        'rgb(243, 212, 65)',
-        'rgb(9, 31, 146)'
-      ],
+      backgroundColor: getNutrientBackgroundColors(),
       borderColor: [
         'rgb(255, 255, 255)',
         'rgb(255, 255, 255)',
@@ -111,9 +115,16 @@ function drawCaloricBreakdownChart(nutrients, dataType) {
     }
   };
 
+  // draw/update pie chart
   $('.chart-container').html('<canvas class="nutrients-chart" width="200" height="200"></canvas>');
   let ctx = $('.nutrients-chart');
   ctx.each(function() {
     caloricChart = new Chart($(this), config);
+  })
+
+  themeToggle.on('change', function() {
+    caloricChart.data.datasets[0].backgroundColor = getNutrientBackgroundColors();
+    caloricChart.update();
+    console.log(caloricChart.data.datasets[0].backgroundColor);
   })
 }
