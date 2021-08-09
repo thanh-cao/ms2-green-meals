@@ -7,16 +7,22 @@
   --primary-text: #212121;
   --secondary-text: #757575;
   --card: #fff;
+  --fat-color: #FFC0CB;
+  --carbs-color: #8BD5FF;
+  --protein-color: #FFD540;
 }
 
 .dark-mode {
   --background: #003b3c;
-  --primary-color: #92d18a;
+  --primary-color: #85bf7e;
   --primary-color-dark: #41a464;
   --accent-color: #38726c;
   --primary-text: #fcfcfc;
   --secondary-text: #c4c4c4;
   --card: #38726c;
+  --fat-color: #DF8897;
+  --carbs-color: #00A3FF;
+  --protein-color: #C1A252;
 }
 
 body {
@@ -173,7 +179,6 @@ span.icon-text {
 }
 
 .btn-reset {
-  background-color: white;
   border-color: var(--secondary-text);
   color: var(--secondary-text);
 }
@@ -189,13 +194,13 @@ span.icon-text {
 }
 
 .fat-color {
-  color: #f3d441;
+  color: var(--fat-color);
 }
 .carbs-color {
-  color: #091f92;
+  color: var(--carbs-color);
 }
 .protein-color {
-  color: #8a0606;
+  color: var(--protein-color);
 }
 
 .section-card-wrapper {
@@ -211,6 +216,10 @@ span.icon-text {
   text-decoration: none;
   color: inherit;
   transition: border 0.15s ease-in-out;
+}
+
+.card {
+  background-color: var(--card);
 }
 
 .card-body:hover {
