@@ -116,7 +116,7 @@ function drawCaloricBreakdownChart(nutrients, dataType) {
   };
 
   // draw/update pie chart
-  $('.chart-container').html('<canvas class="nutrients-chart" width="200" height="200"></canvas>');
+  $('.chart-container').html('<canvas class="nutrients-chart mx-auto" width="200" height="200"></canvas>');
   let ctx = $('.nutrients-chart');
   ctx.each(function() {
     caloricChart = new Chart($(this), config);

@@ -21,6 +21,7 @@ dietPreferenceList.on("change", getUserDiet);
 intoleranceList.on("change", getUserIntolerances);
 userMealPreference.on("submit", e => {
   e.preventDefault();
+  location.href = '#meal-plan-container';
   handleUserMealPreferences();
 });
 // reset button to clear all data

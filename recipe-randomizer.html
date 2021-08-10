@@ -169,12 +169,11 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="text-end col-6">
-                        <a href="#meal-plan"><button class="btn btn-primary" type="submit">Randomize <i class="fas fa-random"></i></button></a>
+                    <div class="col text-center">
+                        <button class="btn btn-primary" type="submit">Randomize <i class="fas fa-random"></i></button>
+                        <button class="btn btn-reset ms-1" type="reset">Reset</button>
                     </div>
-                    <div class="col-6">
-                        <button class="btn btn-reset" type="reset">Reset</button>
-                    </div>
+                </div>
             </form>
         </section>
 
@@ -283,11 +282,12 @@
                 </div>
 
                 <!-- total daily nutrient breakdown -->
-                <div id="nutrient-breakdown-total" class="col-12 col-lg-5">
+                <div class="col-12 col-lg-5">
+                    <div class="caloric-breakdown-container">
                     <h5 class="text-uppercase text-center text-white pt-3">Total Caloric Breakdown</h5>
-                    <div class="row py-3 text-center">
-                        <div class="col-6 col-lg-12 mb-lg-4 chart-container"></div>
-                        <div id="total-nutrients-absolute" class="col-6 col-lg-12 mx-auto my-auto">
+                    <div class="row py-3">
+                        <div class="col-12 col-sm-6 col-lg-12 mb-lg-4 chart-container"></div>
+                        <div id="total-nutrients-absolute" class="col-12 col-sm-6 col-lg-12 mx-auto my-auto">
                             <div class="clearfix">
                                 <div class="nutrient-key d-inline-block text-end w-50 me-2 text-white">Calories:</div>
                                 <div class="nutrient-value d-inline-block w-25 text-start text-white"><span class="calories"></span></div>
@@ -305,6 +305,7 @@
                                 <div class="nutrient-value carbs-color d-inline-block w-25 text-start"><span class="carbohydrates"></span>g</div>
                             </div>
                         </div>
+                    </div>
                     </div>
                 </div>
             </div>
@@ -363,7 +364,7 @@
     <script src="assets/js/main.js"></script>
     <script src="assets/js/recipe-randomizer.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
-    
+
 </body>
 
 </html>

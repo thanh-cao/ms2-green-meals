@@ -189,7 +189,7 @@ span.icon-text {
   color: white;
 }
 
-#nutrient-breakdown-total {
+.caloric-breakdown-container {
   background-color: var(--primary-color);
 }
 
@@ -253,6 +253,11 @@ span.icon-text {
   z-index: -1;
 }
 
+body.dark-mode section.hero-wrapper:before {
+  background-color: #5B5B5B;
+  opacity: 0.6;
+}
+
 .hero-heading {
   color: var(--primary-color-dark);
   font-family: Merienda, sans-serif;
@@ -277,8 +282,8 @@ span.icon-text {
 }
 
 /*----diet and intolerance selection*/
-#meal-preference input[type="radio"],
-#meal-preference input[type="checkbox"] {
+form input[type="radio"],
+form input[type="checkbox"] {
   margin: 0;
   padding: 0;
   appearance: none;
@@ -286,7 +291,7 @@ span.icon-text {
   -moz-appearance: none;
 }
 
-form#meal-preference input:checked + label {
+form input:checked + label {
   background-color: var(--accent-color);
   border-radius: 10px;
   border: 1rem solid var(--accent-color);
