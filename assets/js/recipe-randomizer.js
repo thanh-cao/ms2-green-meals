@@ -21,7 +21,6 @@ dietPreferenceList.on("change", getUserDiet);
 intoleranceList.on("change", getUserIntolerances);
 userMealPreference.on("submit", e => {
   e.preventDefault();
-  location.href = '#meal-plan-container';
   handleUserMealPreferences();
 });
 // reset button to clear all data
@@ -40,9 +39,9 @@ $('button[type="reset"]').on("click", function () {
 function handleUserMealPreferences() {
   $("#meal-plan").removeClass("d-none");
   mealPlanDisplay.empty();
-  // totalNutrientsDisplay.empty();
   totalNutrientsChart.empty();
   fetchMealPlan();
+  location.href = '#meal-plan-container';
 }
 
 // functions to gather user's search query based on diet preference and intolerances and parse queries to API call
@@ -51,6 +50,20 @@ function getUserDiet(e) {
     diet = this.labels[0].innerText;
     console.log(diet);
   }
+  
+  // set visual cues for vegan diet to include dairy and egg as intolerances by default. Since vegan diet parameter already returns results excluding dairy and egg, it's not needed to also set intolerance param in this case.
+  if (diet === 'Vegan') {
+    intoleranceList[0].checked = true;
+    intoleranceList[1].checked = true;
+    intoleranceList[0].disabled = true;
+    intoleranceList[1].disabled = true;
+  } else {
+    intoleranceList[0].checked = false;
+    intoleranceList[1].checked = false;
+    intoleranceList[0].disabled = false;
+    intoleranceList[1].disabled = false;
+  }
+
   saveToLocalStorage('userDiet', diet);
   return diet;
 }
