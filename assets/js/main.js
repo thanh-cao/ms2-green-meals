@@ -36,7 +36,7 @@ function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-// functions to write nutrients' absolute value and draw caloric breakdown pie chart which can be used in recipe-randomizer.html and recipe-details.html
+// functions to find the needed nutrient from a list and then write that nutrient's absolute value which can be used in recipe-randomizer.html and recipe-details.html
 function writeNutrientsAbsolute(nutrient, nutrientList, dataType) {
   let amount = findNutrientAbsoluteData(nutrient, nutrientList, dataType);
   $(`.${nutrient}`).each(function () {
@@ -56,6 +56,7 @@ function findNutrientAbsoluteData(nutrient, nutrientList, dataType) {
   }
 }
 
+// get background colors for the 3 nutrients accordingly to the theme chosen from css variables
 function getNutrientBackgroundColors() {
   let carbsColor = getComputedStyle(document.body).getPropertyValue('--carbs-color');
   let fatColor = getComputedStyle(document.body).getPropertyValue('--fat-color');
@@ -63,9 +64,9 @@ function getNutrientBackgroundColors() {
   return [carbsColor, fatColor, proteinColor];
 }
 
-function drawCaloricBreakdownChart(nutrients, dataType) {
-  // compiling neccessary configs and data for pie chart
-  let caloricChart, carbsCalories, proteinCalories, fatCalories;
+// functions to compile neccesary configurations and then draw pie chart using chart.js to show caloric percentage breakdown of nutrients
+function compilePieChartConfigs(nutrients, dataType) {
+  let carbsCalories, proteinCalories, fatCalories;
 
   if (dataType === 'mealPlanData') {
     carbsCalories = nutrients.carbohydrates * 4 / nutrients.calories * 100;
@@ -77,7 +78,7 @@ function drawCaloricBreakdownChart(nutrients, dataType) {
     fatCalories = nutrients.percentFat;
   }
 
-  const data = {
+  const chartData = {
     labels: ['Carbs', 'Fat', 'Protein'],
     datasets: [{
       label: 'Caloric Breakdown',
@@ -93,9 +94,9 @@ function drawCaloricBreakdownChart(nutrients, dataType) {
     }]
   };
 
-  const config = {
+  const chartConfigs = {
     type: 'pie',
-    data: data,
+    data: chartData,
     plugins: [ChartDataLabels],
     options: {
       responsive: false,
@@ -114,14 +115,21 @@ function drawCaloricBreakdownChart(nutrients, dataType) {
       },
     }
   };
+  return chartConfigs;
+}
 
-  // draw/update pie chart
+function drawCaloricBreakdownChart(nutrients, dataType) {
+  let caloricChart;
+  let chartConfigs = compilePieChartConfigs(nutrients, dataType);
+
+  // draw pie chart
   $('.chart-container').html('<canvas class="nutrients-chart mx-auto" width="200" height="200"></canvas>');
   let ctx = $('.nutrients-chart');
   ctx.each(function() {
-    caloricChart = new Chart($(this), config);
+    caloricChart = new Chart($(this), chartConfigs);
   })
 
+  // update background color of chart's data based on chosen theme
   themeToggle.on('change', function() {
     caloricChart.data.datasets[0].backgroundColor = getNutrientBackgroundColors();
     caloricChart.update();
