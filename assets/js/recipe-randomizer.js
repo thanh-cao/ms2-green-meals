@@ -31,13 +31,10 @@ $('button[type="reset"]').on("click", function () {
   mealListId.splice(0);
   $("#meal-plan").addClass("d-none");
   // delete saved items in local storage
-  localStorage.removeItem('userDiet');
-  localStorage.removeItem('userIntolerances');
-  localStorage.removeItem('mealPlanData');
-  localStorage.removeItem('mealPlanDisplay');
-  localStorage.removeItem('totalNutrientBreakdown');
-  localStorage.removeItem('newMeal');
-  localStorage.removeItem('loadMealPlan');
+  const localStorageKeys = ['userDiet', 'userIntolerances', 'mealPlanData', 'mealPlanDisplay', 'totalNutrientBreakdown', 'newMeal', 'loadMealPlan', 'groceryList'];
+  localStorageKeys.forEach(key => {
+    localStorage.removeItem(key);
+  })
 });
 
 function handleUserMealPreferences() {
