@@ -1,4 +1,4 @@
-$(window).ready(function () {
+$(document).ready(function () {
     const recipeId = Number(loadFromLocalStorage('recipeIdToDisplay')); // convert Id from being a string loaded from localStorage to number
     const mealPlanData = loadFromLocalStorage('mealPlanData');
     console.log(recipeId);
@@ -23,44 +23,46 @@ $(window).ready(function () {
     writeNutrientsAbsolute('carbohydrates', recipeData.nutrition.nutrients, 'mealData');
     drawCaloricBreakdownChart(recipeData.nutrition.caloricBreakdown, 'mealData');
 
-    $('.add-to-list-btn').on('mousedown', function (e) {
-        e.preventDefault();  // remove button's :focus state on mousedown
-        let ingredientArray = [];
-    
-        recipeData.extendedIngredients.forEach(ingredient => {
-            ingredientArray.push([ingredient.name, ingredient.amount, ingredient.unit]);
-        });
-    
-        if (!loadFromLocalStorage('groceryList')) {
-            saveToLocalStorage('groceryList', ingredientArray);
-            $('.add-to-list-btn').text('Added');
-        } else {
-            let retrievedIngredientArray = loadFromLocalStorage('groceryList');
-            console.log(retrievedIngredientArray);
-    
-            if ($('.add-to-list-btn').text() === 'Add to grocery list') {
-                ('groceryList');
-                retrievedIngredientArray.push(...ingredientArray);
-                console.log(retrievedIngredientArray);
-                saveToLocalStorage('groceryList', retrievedIngredientArray);
-                $('.add-to-list-btn').text('Added');
-            } else {
-                console.log(retrievedIngredientArray);
-                console.log(ingredientArray);
-                console.log(retrievedIngredientArray.indexOf(ingredientArray[0]));
-                retrievedIngredientArray.splice(retrievedIngredientArray.indexOf(ingredientArray[0]));
-                console.log('New array ' + retrievedIngredientArray);
-                saveToLocalStorage('groceryList', retrievedIngredientArray);
-                $('.add-to-list-btn').text('Add to grocery list');
-            }
-        }
+    $('.back-to-meal-plan').on('click', function () {
+        history.back();
     })
+
+    activateAddRemoveButton();
 })
 
-$('.back-to-meal-plan').on('click', function () {
-    history.back();
-    saveToLocalStorage('loadMealPlan', 'true');
-})
+function activateAddRemoveButton() {
+    $('span.add').on('click', function () {
+        if ($(this).hasClass('remove')) {
+            $(this).removeClass('remove');
+            $(this).text('+');
+            $(this).addClass('add');
+            addOrRemoveFromGroceryList($(this), 'remove');
+        } else {
+            $(this).removeClass('add');
+            $(this).text('-');
+            $(this).addClass('remove');
+            addOrRemoveFromGroceryList($(this), 'add');
+        }
+    })
+}
+
+function addOrRemoveFromGroceryList(item, action) {
+    const name = item.closest('li.row').find('.ingredient-name').text();
+    const quantity = item.closest('li.row').find('.ingredient-qty').text();
+
+    if (action === 'add' && !loadFromLocalStorage('groceryList')) {
+        saveToLocalStorage('groceryList', [{name, quantity}]);
+    } else if (action === 'add' && loadFromLocalStorage('groceryList')) {
+        let retrievedGroceryList = loadFromLocalStorage('groceryList');
+        retrievedGroceryList.push({name, quantity});
+        saveToLocalStorage('groceryList', retrievedGroceryList);
+    } else if (action === 'remove') {
+        let retrievedGroceryList = loadFromLocalStorage('groceryList');
+        const itemIndex = retrievedGroceryList.findIndex(element => element.name === name && element.quantity === quantity);
+        retrievedGroceryList.splice(itemIndex, 1);
+        saveToLocalStorage('groceryList', retrievedGroceryList);
+    }
+}
 
 function generateOrderedRecipeInstructions(recipeData) {
     let instructionArray = recipeData.analyzedInstructions;
@@ -85,16 +87,17 @@ function generateIngredientList(recipeData) {
     if (recipeData.extendedIngredients) {
         recipeData.extendedIngredients.forEach(ingredient => {
             ingredientRows += `
-            <li class="row mb-3">
+            <li class="row mb-3 align-items-center">
+                <span class="col-1"><span class="add">+</span></span>
                 <span class="ingredient-img col-3"><img src="${ingredientImgBaseUrl}${ingredient.image}" width="50" height="50"></span>
-                <span class="ingredient-name col-6 my-auto">${capitalizeFirstLetter(ingredient.name)}</span>
+                <span class="ingredient-name col-5 my-auto">${capitalizeFirstLetter(ingredient.name)}</span>
                 <span class="ingredient-qty col-3 my-auto">${ingredient.amount} ${ingredient.unit}</span>
             </li>
             `;
-        })
+        })        
         return ingredientRows;
     } else {
-        $('.add-to-list-btn').hide();
+        // $('.add-to-list-btn').hide();
         return `<p>Ingredient list can be found at <a href="${recipeData.sourceUrl}" target="_blank">${recipeData.sourceName}</a></p>`
     }
 }

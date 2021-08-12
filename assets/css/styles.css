@@ -7,9 +7,9 @@
   --primary-text: #212121;
   --secondary-text: #757575;
   --card: #fff;
-  --fat-color: #FFC0CB;
-  --carbs-color: #8BD5FF;
-  --protein-color: #FFD540;
+  --fat-color: #ffc0cb;
+  --carbs-color: #8bd5ff;
+  --protein-color: #ffd540;
 }
 
 .dark-mode {
@@ -20,9 +20,9 @@
   --primary-text: #fcfcfc;
   --secondary-text: #c4c4c4;
   --card: #38726c;
-  --fat-color: #DF8897;
-  --carbs-color: #00A3FF;
-  --protein-color: #C1A252;
+  --fat-color: #df8897;
+  --carbs-color: #00a3ff;
+  --protein-color: #c1a252;
 }
 
 body {
@@ -111,7 +111,6 @@ footer {
 
 .footer-sponsor a:hover {
   color: var(--primary-color-dark);
-  transition: background-color 0.35s ease-in-out;
 }
 
 .social-links i {
@@ -228,7 +227,7 @@ span.icon-text {
 
 .card-body:hover .card-title {
   text-decoration: underline;
-  text-decoration-color: var(--primary-color); 
+  text-decoration-color: var(--primary-color);
 }
 
 /*----index page */
@@ -254,7 +253,7 @@ span.icon-text {
 }
 
 body.dark-mode section.hero-wrapper:before {
-  background-color: #5B5B5B;
+  background-color: #5b5b5b;
   opacity: 0.6;
 }
 
@@ -273,6 +272,57 @@ body.dark-mode section.hero-wrapper:before {
     padding-left: 3rem;
     padding-right: 3rem;
   }
+}
+
+.add {
+  color: var(--primary-color);
+  font-size: 1.5rem;
+  position: relative;
+  cursor: pointer;
+}
+
+.add:hover {
+  color: white;
+  z-index: 1;
+}
+
+.add:hover:before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: -6px;
+  border-radius: 50%;
+  background-color: var(--primary-color);
+  /* border: 1px solid var(--primary-color); */
+  height: 1.75rem;
+  width: 1.75rem;
+  z-index: -1;
+}
+
+.remove {
+  color: #ff6f6f;
+  font-size: 1.5rem;
+  position: relative;
+  cursor: pointer;
+  padding-left: 3px;
+}
+
+.remove:hover {
+  color: white;
+  z-index: 1;
+}
+
+.remove:hover:before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: -6px;
+  border-radius: 50%;
+  background-color: #ff6f6f;
+  /* border: 1px solid var(--primary-color); */
+  height: 1.75rem;
+  width: 1.75rem;
+  z-index: -1;
 }
 
 .fa-edit,
@@ -312,7 +362,7 @@ hr {
 }
 
 @media (min-width: 768px) {
-  .recipe-ingredients, 
+  .recipe-ingredients,
   .recipe-instructions {
     width: 80%;
     margin-left: auto;

@@ -1,4 +1,4 @@
-$(window).ready(function () {
+$(document).ready(function () {
     let retrievedGroceryList = loadFromLocalStorage('groceryList');
     console.log(retrievedGroceryList);
 
@@ -16,10 +16,10 @@ $(window).ready(function () {
                         <input class="item-checkbox" type="checkbox">
                     </div>
                     <div class="col-6">
-                        <p class="grocery-item">${capitalizeFirstLetter(item[0])}</p>
+                        <p class="grocery-item">${item.name}</p>
                     </div>
                     <div class="col-3 pe-2 d-flex justify-content-between">
-                        <p class="grocery-item-qty d-inline w-75" contenteditable>${item[1]} ${item[2]}</p>
+                        <p class="grocery-item-qty d-inline w-75" contenteditable>${item.quantity}</p>
                     </div>
                     <div class="col-1">
                         <i class="fas fa-trash-alt"></i>
