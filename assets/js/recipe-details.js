@@ -26,24 +26,49 @@ $(document).ready(function () {
     $('.back-to-meal-plan').on('click', function () {
         history.back();
     })
-
     activateAddRemoveButton();
 })
 
 function activateAddRemoveButton() {
-    $('span.add').on('click', function () {
-        if ($(this).hasClass('remove')) {
-            $(this).removeClass('remove');
-            $(this).text('+');
-            $(this).addClass('add');
-            addOrRemoveFromGroceryList($(this), 'remove');
+    checkIfItemsAreAlreadyAdded(); // by default, an ingredient item has "add" action to add the item to grocery list. If an item is already added in the list, give it 'remove' action
+
+    $('span.col-1').on('click', function () {
+        let action = $(this).children();
+
+        if (action.hasClass('remove')) {
+            action.removeClass('remove');
+            action.text('+');
+            action.addClass('add');
+            addOrRemoveFromGroceryList(action, 'remove');
         } else {
-            $(this).removeClass('add');
-            $(this).text('-');
-            $(this).addClass('remove');
-            addOrRemoveFromGroceryList($(this), 'add');
+            action.removeClass('add');
+            action.text('-');
+            action.addClass('remove');
+            addOrRemoveFromGroceryList(action, 'add');
         }
     })
+}
+
+function checkIfItemsAreAlreadyAdded() {
+    const retrievedGroceryList = loadFromLocalStorage('groceryList');
+
+    if (retrievedGroceryList) {
+        $('.ingredient-name').each(function () {
+            let name = $(this).text();
+            let quantity = $(this).next().text();
+            let ingredientItem = { name, quantity };
+            let foundIndex = retrievedGroceryList.findIndex(groceryItem => {
+                if (groceryItem.name === ingredientItem.name && groceryItem.quantity === ingredientItem.quantity)
+                    return true
+            });
+
+            if (foundIndex !== -1) {
+                $(this).prev().prev().children().removeClass('add');
+                $(this).prev().prev().children().addClass('remove');
+                $(this).prev().prev().children().text('-');
+            }
+        })
+    }
 }
 
 function addOrRemoveFromGroceryList(item, action) {
@@ -51,10 +76,10 @@ function addOrRemoveFromGroceryList(item, action) {
     const quantity = item.closest('li.row').find('.ingredient-qty').text();
 
     if (action === 'add' && !loadFromLocalStorage('groceryList')) {
-        saveToLocalStorage('groceryList', [{name, quantity}]);
+        saveToLocalStorage('groceryList', [{ name, quantity }]);
     } else if (action === 'add' && loadFromLocalStorage('groceryList')) {
         let retrievedGroceryList = loadFromLocalStorage('groceryList');
-        retrievedGroceryList.push({name, quantity});
+        retrievedGroceryList.push({ name, quantity });
         saveToLocalStorage('groceryList', retrievedGroceryList);
     } else if (action === 'remove') {
         let retrievedGroceryList = loadFromLocalStorage('groceryList');
@@ -94,7 +119,7 @@ function generateIngredientList(recipeData) {
                 <span class="ingredient-qty col-3 my-auto">${ingredient.amount} ${ingredient.unit}</span>
             </li>
             `;
-        })        
+        })
         return ingredientRows;
     } else {
         // $('.add-to-list-btn').hide();
