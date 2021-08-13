@@ -11,15 +11,15 @@ $(document).ready(function () {
         let itemRows = '';
         retrievedGroceryList.forEach(item => {
             itemRows += `
-                <div class="row g-0 align-items-start">
+                <div class="row g-0 mb-3 align-items-center">
                     <div class="col-2 text-center">
                         <input class="item-checkbox" type="checkbox">
                     </div>
-                    <div class="col-6">
-                        <p class="grocery-item">${item.name}</p>
+                    <div class="col-5 grocery-item">
+                        ${item.name}
                     </div>
-                    <div class="col-3 pe-2 d-flex justify-content-between">
-                        <p class="grocery-item-qty d-inline w-75" contenteditable>${item.quantity}</p>
+                    <div class="col-4 pe-2 d-flex justify-content-between">
+                        <span class="grocery-item-qty d-inline w-75" contenteditable>${item.quantity}</span>
                     </div>
                     <div class="col-1">
                         <i class="fas fa-trash-alt"></i>
@@ -30,8 +30,12 @@ $(document).ready(function () {
         $('#grocery-list-data').append(itemRows);
     }
 
+    activateButtons();
+})
+
+function activateButtons() {
     let checkboxes = $('.item-checkbox');
-    let qtyEditable = $('p.grocery-item-qty');
+    let qtyEditable = $('span.grocery-item-qty');
     let removeBtns = $('i.fa-trash-alt');
 
     checkboxes.each(function () {
@@ -63,4 +67,4 @@ $(document).ready(function () {
         `);
         localStorage.removeItem('groceryList');
     })
-})
+}
