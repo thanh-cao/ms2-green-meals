@@ -15,6 +15,10 @@ const apiKey2 = "09c17d8e03d043c49e345a14a780221e"; // backup apiKey for use whe
 
 let mealListId = [];
 
+$(document).ready(function() {
+  showReturningUserModal();
+})
+
 // event listeners
 // gather search query and then fetch data through API call
 dietPreferenceList.on("change", getUserDiet);
@@ -23,17 +27,13 @@ userMealPreference.on("submit", e => {
   e.preventDefault();
   handleUserMealPreferences();
 });
-// reset button to clear all data
-$('button[type="reset"]').on("click", function () {
+
+$('button[type="reset"]').on("click", function() {
   diet = "vegetarian"; // by reset, make vegetarian as a default diet preference
   intolerances.splice(0);
   mealListId.splice(0);
   $("#meal-plan").addClass("d-none");
-  // delete saved items in local storage
-  const localStorageKeys = ['userDiet', 'userIntolerances', 'mealPlanData', 'mealPlanDisplay', 'totalNutrientBreakdown', 'newMeal', 'loadMealPlan', 'groceryList'];
-  localStorageKeys.forEach(key => {
-    localStorage.removeItem(key);
-  })
+  resetLocalStorage();
 });
 
 function handleUserMealPreferences() {

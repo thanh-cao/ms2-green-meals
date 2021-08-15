@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(document).ready(function() {
     const recipeId = Number(loadFromLocalStorage('recipeIdToDisplay')); // convert Id from being a string loaded from localStorage to number
     const mealPlanData = loadFromLocalStorage('mealPlanData');
     console.log(recipeId);
@@ -23,16 +23,17 @@ $(document).ready(function () {
     writeNutrientsAbsolute('carbohydrates', recipeData.nutrition.nutrients, 'mealData');
     drawCaloricBreakdownChart(recipeData.nutrition.caloricBreakdown, 'mealData');
 
-    $('.back-to-meal-plan').on('click', function () {
+    $('.back-to-meal-plan').on('click', function() {
         history.back();
     })
     activateAddRemoveButton();
+    showReturningUserModal();
 })
 
 function activateAddRemoveButton() {
     checkIfItemsAreAlreadyAdded(); // by default, an ingredient item has "add" action to add the item to grocery list. If an item is already added in the list, give it 'remove' action
 
-    $('span.col-1').on('click', function () {
+    $('span.col-1').on('click', function() {
         let action = $(this).children();
 
         if (action.hasClass('remove')) {
@@ -53,7 +54,7 @@ function checkIfItemsAreAlreadyAdded() {
     const retrievedGroceryList = loadFromLocalStorage('groceryList');
 
     if (retrievedGroceryList) {
-        $('.ingredient-name').each(function () {
+        $('.ingredient-name').each(function() {
             let name = $(this).text();
             let quantity = $(this).next().text();
             let ingredientItem = { name, quantity };

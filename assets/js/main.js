@@ -2,22 +2,26 @@
 
 // light/dark theme toggle
 const themeToggle = $('.theme-switch input[type="checkbox"]');
-const themePreference = loadFromLocalStorage("theme");
+const themePreference = loadFromLocalStorage('theme');
 
 themeToggle.on('change', toggleDarkMode);
 
-if (themePreference === "dark") {
-  $("body").addClass("dark-mode");
+if (themePreference === 'dark') {
+  $('body').addClass('dark-mode');
   themeToggle.prop('checked', true);
 }
 
+$(document).ready(function() {
+  showReturningUserModal();
+})
+
 function toggleDarkMode(e) {
   if (e.target.checked) {
-    $("body").addClass("dark-mode");
-    saveToLocalStorage("theme", "dark");
+    $('body').addClass('dark-mode');
+    saveToLocalStorage('theme', 'dark');
   } else {
-    $("body").removeClass("dark-mode");
-    saveToLocalStorage("theme", "light");
+    $('body').removeClass('dark-mode');
+    saveToLocalStorage('theme', 'light');
   }
 }
 
@@ -32,6 +36,15 @@ function loadFromLocalStorage(dataName) {
   return JSON.parse(localStorage.getItem(dataName));
 }
 
+// clear all data in localStorage on reset button click
+function resetLocalStorage() {
+  // delete saved items in local storage
+  const localStorageKeys = ['userDiet', 'userIntolerances', 'mealPlanData', 'mealPlanDisplay', 'totalNutrientBreakdown', 'newMeal', 'loadMealPlan', 'groceryList', 'recipeIdToDisplay'];
+  localStorageKeys.forEach(key => {
+    localStorage.removeItem(key);
+  })
+}
+
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
@@ -39,7 +52,7 @@ function capitalizeFirstLetter(string) {
 // functions to find the needed nutrient from a list and then write that nutrient's absolute value which can be used in recipe-randomizer.html and recipe-details.html
 function writeNutrientsAbsolute(nutrient, nutrientList, dataType) {
   let amount = findNutrientAbsoluteData(nutrient, nutrientList, dataType);
-  $(`.${nutrient}`).each(function () {
+  $(`.${nutrient}`).each(function() {
     $(this).text(''); // clear previous data
     return $(this).text(amount); // write new data
   })
@@ -135,4 +148,40 @@ function drawCaloricBreakdownChart(nutrients, dataType) {
     caloricChart.update();
     console.log(caloricChart.data.datasets[0].backgroundColor);
   })
+}
+
+// functions to trigger modal when a user returns and already have a meal plan generated from previous visit. User can then choose to resume previous session or reset to start from beginning
+function showReturningUserModal() {
+  if (loadFromLocalStorage('loadMealPlan') === 'true' && !sessionStorage.getItem('modalShown')) {
+    console.log('its true')
+    $('div.returning-user-modal').html(
+      `<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="false">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Resume previous session?</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              You already have a meal plan generated from previous visit. Would you like to resume where you left off or reset to beginning?
+            </div>
+            <div class="modal-footer justify-content-center">
+            <button class="btn btn-primary" onclick="resumePreviousSession()">Resume</button>
+            <button class="btn btn-reset" onclick="resetLocalStorage()">Reset</button>
+            </div>
+          </div>
+        </div>
+      </div>`
+    );
+  }
+  $('#exampleModal').modal('show');
+  sessionStorage.setItem('modalShown', 'true');
+}
+
+function resumePreviousSession() {
+  if (window.location = 'index.html') {
+    window.location = 'recipe-randomizer.html#meal-plan-container';
+  } else {
+    $('#exampleModal').modal('hide');
+  }
 }

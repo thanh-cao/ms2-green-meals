@@ -31,6 +31,7 @@ $(document).ready(function () {
     }
 
     activateButtons(); // activate actions for grocery list items
+    showReturningUserModal();
 })
 
 function activateButtons() {
