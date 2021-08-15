@@ -17,11 +17,9 @@ $(document).ready(function() {
     $('.recipe-img').attr('src', recipeData.image);
     $('.recipe-img').attr('alt', recipeData.title);
     $('#recipe-instructions').html(recipeInstructions);
-    writeNutrientsAbsolute('calories', recipeData.nutrition.nutrients, 'mealData');
-    writeNutrientsAbsolute('protein', recipeData.nutrition.nutrients, 'mealData');
-    writeNutrientsAbsolute('fat', recipeData.nutrition.nutrients, 'mealData');
-    writeNutrientsAbsolute('carbohydrates', recipeData.nutrition.nutrients, 'mealData');
-    drawCaloricBreakdownChart(recipeData.nutrition.caloricBreakdown, 'mealData');
+
+    generateCaloricBreakdown(recipeData.nutrition.caloricBreakdown, 'mealData', 'drawPieChart');
+    generateCaloricBreakdown(['calories', 'protein', 'fat', 'carbohydrates'], 'mealData', 'writeAbsoluteData', recipeData.nutrition.nutrients);
 
     $('.back-to-meal-plan').on('click', function() {
         history.back();

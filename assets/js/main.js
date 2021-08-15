@@ -50,7 +50,7 @@ function capitalizeFirstLetter(string) {
 }
 
 // functions to find the needed nutrient from a list and then write that nutrient's absolute value which can be used in recipe-randomizer.html and recipe-details.html
-function writeNutrientsAbsolute(nutrient, nutrientList, dataType) {
+function writeNutrientsAbsoluteData(nutrient, nutrientList, dataType) {
   let amount = findNutrientAbsoluteData(nutrient, nutrientList, dataType);
   $(`.${nutrient}`).each(function() {
     $(this).text(''); // clear previous data
@@ -148,6 +148,21 @@ function drawCaloricBreakdownChart(nutrients, dataType) {
     caloricChart.update();
     console.log(caloricChart.data.datasets[0].backgroundColor);
   })
+}
+
+function generateCaloricBreakdown(nutrients, dataType, action, nutrientList) {
+  if (action === "drawPieChart") {
+    console.log('draw');
+    drawCaloricBreakdownChart(nutrients, dataType);
+  } else if (action === "writeAbsoluteData") {
+    // const nutrients = ['calories', 'protein', 'fat', 'carbohydrates'];
+    console.log('write');
+    console.log(nutrients);
+
+    nutrients.forEach(nutrient => {
+      writeNutrientsAbsoluteData(nutrient, nutrientList, dataType);
+    })
+  }
 }
 
 // functions to trigger modal when a user returns and already have a meal plan generated from previous visit. User can then choose to resume previous session or reset to start from beginning

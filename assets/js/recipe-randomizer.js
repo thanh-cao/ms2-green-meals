@@ -93,12 +93,10 @@ function fetchMealPlan() {
       console.log(results.meals);
       console.log(results.nutrients);
       let mealList = results.meals;
+      
       extractMealListId(mealList);
-      drawCaloricBreakdownChart(results.nutrients, 'mealPlanData');
-      writeNutrientsAbsolute('calories', results.nutrients, 'mealPlanData');
-      writeNutrientsAbsolute('protein', results.nutrients, 'mealPlanData');
-      writeNutrientsAbsolute('fat', results.nutrients, 'mealPlanData');
-      writeNutrientsAbsolute('carbohydrates', results.nutrients, 'mealPlanData');
+      generateCaloricBreakdown(results.nutrients, 'mealPlanData', 'drawPieChart');
+      generateCaloricBreakdown(['calories', 'protein', 'fat', 'carbohydrates'], 'mealPlanData', 'writeAbsoluteData', results.nutrients);
       saveToLocalStorage('totalNutrientBreakdown', results.nutrients);
     })
     .done(function () {
@@ -276,9 +274,6 @@ function updateNewMealPlanNutrients() {
   console.log(newMealPlanNutrients);
   saveToLocalStorage('totalNutrientBreakdown', newMealPlanNutrients);
 
-  drawCaloricBreakdownChart(newMealPlanNutrients, 'mealPlanData');
-  writeNutrientsAbsolute('calories', newMealPlanNutrients, 'mealPlanData');
-  writeNutrientsAbsolute('protein', newMealPlanNutrients, 'mealPlanData');
-  writeNutrientsAbsolute('fat', newMealPlanNutrients, 'mealPlanData');
-  writeNutrientsAbsolute('carbohydrates', newMealPlanNutrients, 'mealPlanData');
+  generateCaloricBreakdown(newMealPlanNutrients, 'mealPlanData', 'drawPieChart');
+  generateCaloricBreakdown(['calories', 'protein', 'fat', 'carbohydrates'], 'mealPlanData', 'writeAbsoluteData', newMealPlanNutrients);
 }

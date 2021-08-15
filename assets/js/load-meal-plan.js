@@ -29,10 +29,8 @@ $(window).ready(function () {
 
         mealPlanDisplay.html(loadFromLocalStorage('mealPlanDisplay'));
         viewRecipeDetails();
-        drawCaloricBreakdownChart(mealPlanNutrients, 'mealPlanData');
-        writeNutrientsAbsolute('calories', mealPlanNutrients, 'mealPlanData');
-        writeNutrientsAbsolute('protein', mealPlanNutrients, 'mealPlanData');
-        writeNutrientsAbsolute('fat', mealPlanNutrients, 'mealPlanData');
-        writeNutrientsAbsolute('carbohydrates', mealPlanNutrients, 'mealPlanData');
+        
+        generateCaloricBreakdown(mealPlanNutrients, 'mealPlanData', 'drawPieChart');
+        generateCaloricBreakdown(['calories', 'protein', 'fat', 'carbohydrates'], 'mealPlanData', 'writeAbsoluteData', mealPlanNutrients);
     }
 })
