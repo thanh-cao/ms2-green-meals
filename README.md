@@ -9,6 +9,37 @@ Project Green Meals is a web-based recipe generator app which helps make it easi
 
 [Link to live project](thanh-cao.github.io/ms2-green-meals/)
 
+## Table of Contents
+
+  - [User Experience (UX)](#user-experience-ux)
+    - [User Stories](#user-stories)
+    - [Strategy](#strategy)
+    - [Scope](#scope)
+    - [Structure](#structure)
+      - [Information architecture](#information-architecture)
+      - [Interaction flow](#interaction-flow)
+    - [Skeleton](#skeleton)
+      - [Design](#design)
+      - [Wireframes](#wireframes)
+      - [Design changes](#design-changes)
+  - [Features](#features)
+    - [Existing features](#existing-features)      
+    - [Future implementations](#future-implementations)
+  - [Technologies used](#technologies-used)
+    - [Languages](#languages)
+    - [Frameworks, Libraries & Programs](#frameworks-libraries--programs)
+  - [Testing](#testing)
+  - [Deployment](#deployment)
+    - [Development](#development)
+    - [GitHub Pages](#github-pages)
+    - [Cloning the project locally](#cloning-the-project-locally)
+    - [Forking the repository](#forking-the-repository)
+  - [Credits](#credits)
+    - [Code](#code)
+    - [Content](#content)
+    - [Media](#media)
+    - [Acknowledgements](#acknowledgements)
+
 ## User Experience (UX)
 ### User Stories
 * As a user:
@@ -138,6 +169,7 @@ Upon this page, user is presented first with a panel of options allowing user to
 ![Selecting meal preference](readme/feature-meal-preference-selection.png)
 
 Once user clicks 'Randomize' button, the page reveals the meal plan sugggestion section showing breakfast, lunch, dinner with their details as well as buttons to inform user that they can click on the button to fetch a new recipe. When clicking on each of the meal card, user is taken to recipe details page of that selected meal.
+
 ![Meal plan suggestion](readme/feature-meal-plan-suggestion.png)
 
 Caloric breakdown section is also shown to let user know how much calories/ protein/ fat/ carbs they would consume in total from the suggested meal plan as well as a pie chart showing caloric percentage breakdown of each nutrient. If user chooses to fetch new suggestion for the meal plan, or for any of the single meal, the percentage breakdown as well as the absolute data will be recalculated accordingly.
@@ -149,7 +181,10 @@ This page includes the neccessary information in order to make the meal: image o
 
 #### Grocery page (grocery.html)
 An image showing neon light 'Grocery' is shown to indicate where user is on the page. If user hasn't had any item added to grocery list, an image of a shopping cart and text will inform so. If there are items on grocery list, a list is automatically populated upon landing. Here, user can check the check box to strike items to keep track while shopping, edit item's name and/or quantity, and delete an item off the list.
-![Grocery page - list is empty](readme/feature-grocery-page-emptylist.png) ![Grocery page](readme/feature-grocery-page.png)
+
+![Grocery page - list is empty](readme/feature-grocery-page-emptylist.png) 
+
+![Grocery page](readme/feature-grocery-page.png)
 
 ### Future implementations
 There are endless possibilities that can be implemented in the future. To name a few that can go in the pipeline for next release:
