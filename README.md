@@ -5,7 +5,7 @@ This is project milestone 2: Interactive Front-End Development, for Code Institu
 Project Green Meals is a web-based recipe generator app which helps make it easier for users to try out/maintain a plant-based diet. The app randomly generates daily plant-based 3-meal plan based on user's preferences and restrictions. The meal plan includes calorie and nutrient breakdown in order to let users keep track of their intake, especially protein intakes for those who are starting out with plant-based diet. The app also allows user to create a grocery list based on the chosen meal plan for ease of organization.
 
 ## Showcase
-![Responsive mockups](readme/responsive-mockups.png)*Mockup of project Green Meal on resonsive devices*
+![Responsive mockups](readme/responsive-mockups.png)*Mockup of project Green Meals on responsive devices*
 
 [Link to live project](thanh-cao.github.io/ms2-green-meals/)
 
@@ -61,8 +61,8 @@ Based on the goals and the user stories discussed above, a list of requirements 
 
 ### Structure
 #### Information architecture
-![Information Architecture](readme/information-architecture.png)
-*Information Architecture*
+
+![Information Architecture](readme/information-architecture.png)*Information Architecture*
 
 As seen in the figure above, the architect of the app will remain simple with 2 main menus/pages: recipe suggestion page which further leads to recipe details page, and grocery list page. The app includes a header for navigation bar and footer which includes attribution to Spoonacular's API and Green Meals' social links.
 
@@ -158,3 +158,73 @@ There are endless possibilities that can be implemented in the future. To name a
 * Save favorite recipes
 * Wine paring
 * etc...
+
+## Technologies used
+### Languages
+* [HTML5](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5) - build up layout and content of the application.
+* [CSS3](https://developer.mozilla.org/en-US/docs/Web/CSS) - add custom styling and override Bootstrap stylings to fit with the theme of the website.
+* [JavaScript](https://www.javascript.com/) - to add functionailities throughout the application: make API calls and display data in a structured way.
+
+### Frameworks, Libraries & Programs
+* [Bootstrap](https://getbootstrap.com/) (version 5.1) - the only CSS framework used in order to build the layout of the application and make it responsive across different devices.
+* [jQuery](https://jquery.com/) - a Javascript library used for simplicity of traversing HTML document and manipulation, event handling, and ajax.
+* [chart.js](https://www.chartjs.org/) - visualize caloric percentage breakdown in pie chart using JavaScript.
+* [chart.js plugin for data labels](https://github.com/chartjs/chartjs-plugin-datalabels) - to add data labels to pie chart to enhance user experience.
+* [Figma](https://www.figma.com/) -  for wireframe creation.
+* [Adobe Illustrator](https://www.adobe.com/no/products/illustrator.html) - simulate color scheme and design project's logo.
+* [Visual Studio Code](https://code.visualstudio.com/) - the code editor being used to build the project.
+* [Chrome DevTools](https://developer.chrome.com/docs/devtools/) - used heavily for debugging during development and testing process.
+* [Git](https://git-scm.com/) - the built-in Git feature in VS Code was used for version control and push to github.
+* [Github](https://github.com/) - Github is used to store project's code remotely. 
+* [Google Fonts](https://fonts.google.com/) - to import Merienda and Montserrat font.
+* [Font Awesome](https://fontawesome.com/), [Flaticon](https://www.flaticon.com/), and [Freepik](https://www.freepik.com/) - implement icons for navigation menu, social links, diet and intolerances section, project's logo.
+* [Pic Resize](https://picresize.com/) - to resize large images.
+
+## Testing
+
+## Deployment
+### Development
+The project was developed using VS Code editor and its integrated version control feature to commit gits, which are then pushed to GitHub in order to store the codes remotely.
+
+### GitHub Pages
+The project was deployed to GitHub Pages following these steps:
+
+1. Log in to GitHub and navigate to this project's respository: [ms2-green-meals](https://github.com/thanh-cao/ms2-green-meals)
+2. On the navigation bar of the repository, go to "Settings" tab
+3. Find on the left-hand side menu and locate "Pages"
+4. Under "Source", select Branch: main and click Save
+5. The page will refresh automatically and a link to the page is published: [https://thanh-cao.github.io/ms2-green-meals/](https://thanh-cao.github.io/ms2-green-meals/)
+
+### Cloning the project locally
+Follow these steps to clone this project:
+
+1. Log in to GitHub and navigate to this project's respository: [ms2-green-meals](https://github.com/thanh-cao/ms2-green-meals)
+2. Under the navigation menu of the repository, locate and click the button "Code" which shows different options to clone or download
+3. To clone this repository using HTTPS, copy the link under "Clone with HTTPS"
+4. Open Git terminal
+5. If needed, change the current workspace to the location where you want the repository to be cloned
+6. Type `git clone` and paste in the URL copied in step 3 and press Enter
+
+### Forking the repository
+1. Log in to GitHub and navigate to this project's respository: [ms2-green-meals](https://github.com/thanh-cao/ms2-green-meals)
+2. Just above the navigation menu of the repository (above the Settings button), locate the Fork button
+3. The original copy of the repository is now copied on your GitHub account which allows you to view and/or work on the codes without affecting the original work
+
+## Credits
+### Code
+* Custom checkbox toggle slider by Matt Smith was adapted to create light/dark theme switch - [Link here](https://codepen.io/AllThingsSmitty/pen/MmxxOz/)
+* Tutorial to create light/dark mode using JavaScript - [Link here](https://dev.to/ananyaneogi/create-a-dark-light-mode-switch-with-css-variables-34l8)
+* Using Promise.all() method in order to wait for all API responses to complete and then render content, as used in write meal plan data following order breakfast, lunch, dinner - [Link here](https://gomakethings.com/waiting-for-multiple-all-api-responses-to-complete-with-the-vanilla-js-promise.all-method/
+)
+* Utilizing JSON and localStorage - [Link here](https://frontend.turing.edu/lessons/module-1/json-and-localstorage.html)
+* The formula being used in this project to calculate caloric percentage from fat, protein, carbs is based on Jim Painter's explanation - [Link here](https://www.scientificamerican.com/article/how-do-food-manufacturers/)
+* Various forums, portals, discussions, such as [Stack Overflow](https://stackoverflow.com/), [JavaScipt Tutorial](https://www.javascripttutorial.net/), [GeeksforGeeks](https://www.geeksforgeeks.org/) for example, were used heavily in order to refine my understanding of JavaScripts concepts and methods in order to write my own codes.
+  
+### Content
+The application's content was written by me. Other than that, information about meals/recipes is populated dynamically from Spoonacular Food API.
+
+### Media
+Background image on landing page and grocery image on grocery page are taken from [Unsplash](https://unsplash.com/). Other images for meals/recipes are populated through Spoonacular Food API.
+
+### Acknowledgements
+Thanks to my mentor Narender Singh and the amazing Code Institute's Slack community for reviewing, giving feedback, and mental support.

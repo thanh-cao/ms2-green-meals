@@ -80,7 +80,8 @@ function getNutrientBackgroundColors() {
 // functions to compile neccesary configurations and then draw pie chart using chart.js to show caloric percentage breakdown of nutrients
 function compilePieChartConfigs(nutrients, dataType) {
   let carbsCalories, proteinCalories, fatCalories;
-
+  
+  // formula to calculate caloric percentage from fat, protein, carbs is based on Jim Painter's explanation https://www.scientificamerican.com/article/how-do-food-manufacturers/
   if (dataType === 'mealPlanData') {
     carbsCalories = nutrients.carbohydrates * 4 / nutrients.calories * 100;
     proteinCalories = nutrients.protein * 4 / nutrients.calories * 100;
