@@ -13,7 +13,7 @@ $(document).ready(function () {
             itemRows += `
                 <div class="row g-0 mb-3 align-items-center" data-index="${retrievedGroceryList.indexOf(item)}">
                     <div class="col-2 text-center">
-                        <input class="item-checkbox" type="checkbox">
+                        <input class="item-checkbox" type="checkbox" aria-hidden="true">
                     </div>
                     <div class="col-5 d-flex justify-content-between grocery-item" contenteditable>
                         ${item.name}
@@ -22,7 +22,7 @@ $(document).ready(function () {
                         ${item.quantity}
                     </div>
                     <div class="col-1">
-                        <i class="fas fa-trash-alt"></i>
+                        <i class="fas fa-trash-alt" aria-label="Delete item from the list"></i>
                     </div>
                 </div>
                 `;

@@ -93,7 +93,7 @@ function fetchMealPlan() {
       console.log(results.meals);
       console.log(results.nutrients);
       let mealList = results.meals;
-      
+
       extractMealListId(mealList);
       generateCaloricBreakdown(results.nutrients, 'mealPlanData', 'drawPieChart');
       generateCaloricBreakdown(['calories', 'protein', 'fat', 'carbohydrates'], 'mealPlanData', 'writeAbsoluteData', results.nutrients);
@@ -148,7 +148,7 @@ function writeMealPlan(mealListId) {
           <div class="row row-cols-2 pt-3 pb-2">
               <h3 class="col my-auto ps-4 meal-type-title">${writeMealCardTitle(dataArray.indexOf(data))}</h3>
               <div class="col text-end pe-4">
-                  <button class="btn btn-secondary find-new-meal-btn" onclick="findNewMeal($(this));"><i class="fas fa-random"></i></button>
+                  <button class="btn btn-secondary find-new-meal-btn" aria-label="Find new meal" onclick="findNewMeal($(this));"><i class="fas fa-random"></i></button>
               </div>
           </div>
           <div class="meal-card-data">

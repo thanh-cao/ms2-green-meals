@@ -111,9 +111,9 @@ function generateIngredientList(recipeData) {
     if (recipeData.extendedIngredients) {
         recipeData.extendedIngredients.forEach(ingredient => {
             ingredientRows += `
-            <li class="row mb-3 align-items-center">
+            <li class="row mb-3 g-0 align-items-center">
                 <span class="col-1"><span class="add">+</span></span>
-                <span class="ingredient-img col-3"><img src="${ingredientImgBaseUrl}${ingredient.image}" width="50" height="50" alt="${ingredient.name}"></span>
+                <span class="ingredient-img col-3"><img src="${ingredientImgBaseUrl}${ingredient.image}" width="50" alt="${ingredient.name}"></span>
                 <span class="ingredient-name col-5 my-auto">${capitalizeFirstLetter(ingredient.name)}</span>
                 <span class="ingredient-qty col-3 my-auto">${ingredient.amount} ${ingredient.unit}</span>
             </li>

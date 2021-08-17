@@ -205,6 +205,7 @@ There are endless possibilities that can be implemented in the future. To name a
 * [jQuery](https://jquery.com/) - a Javascript library used for simplicity of traversing HTML document and manipulation, event handling, and ajax.
 * [chart.js](https://www.chartjs.org/) - visualize caloric percentage breakdown in pie chart using JavaScript.
 * [chart.js plugin for data labels](https://github.com/chartjs/chartjs-plugin-datalabels) - to add data labels to pie chart to enhance user experience.
+* [Spoonacular Food API](https://spoonacular.com/food-api) - provide recipe database with complex search parameters
 * [Figma](https://www.figma.com/) -  for wireframe creation.
 * [Adobe Illustrator](https://www.adobe.com/no/products/illustrator.html) - simulate color scheme and design project's logo.
 * [Visual Studio Code](https://code.visualstudio.com/) - the code editor being used to build the project.
@@ -216,6 +217,7 @@ There are endless possibilities that can be implemented in the future. To name a
 * [Pic Resize](https://picresize.com/) - to resize large images.
 
 ## Testing
+Testing process is in its own section [here](TESTING.md).
 
 ## Deployment
 ### Development
