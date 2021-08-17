@@ -13,7 +13,7 @@ if (themePreference === 'dark') {
 
 $(document).ready(function() {
   showReturningUserModal();
-})
+});
 
 function toggleDarkMode(e) {
   if (e.target.checked) {
@@ -42,7 +42,7 @@ function resetLocalStorage() {
   const localStorageKeys = ['userDiet', 'userIntolerances', 'mealPlanData', 'mealPlanDisplay', 'totalNutrientBreakdown', 'newMeal', 'loadMealPlan', 'groceryList', 'recipeIdToDisplay'];
   localStorageKeys.forEach(key => {
     localStorage.removeItem(key);
-  })
+  });
 }
 
 function capitalizeFirstLetter(string) {
@@ -55,16 +55,14 @@ function writeNutrientsAbsoluteData(nutrient, nutrientList, dataType) {
   $(`.${nutrient}`).each(function() {
     $(this).text(''); // clear previous data
     return $(this).text(amount); // write new data
-  })
+  });
 }
 
 function findNutrientAbsoluteData(nutrient, nutrientList, dataType) {
   if (dataType === 'mealPlanData') {
-    console.log(`${nutrient} is ${nutrientList[nutrient]}`);
     return nutrientList[nutrient];
   } else if (dataType === 'mealData') {
     let found = nutrientList.find(element => element.name === capitalizeFirstLetter(nutrient));
-    console.log(`${nutrient} is ${found.amount}`);
     return found.amount;
   }
 }
@@ -141,41 +139,34 @@ function drawCaloricBreakdownChart(nutrients, dataType) {
   let ctx = $('.nutrients-chart');
   ctx.each(function() {
     caloricChart = new Chart($(this), chartConfigs);
-  })
+  });
 
   // update background color of chart's data based on chosen theme
   themeToggle.on('change', function() {
     caloricChart.data.datasets[0].backgroundColor = getNutrientBackgroundColors();
     caloricChart.update();
-    console.log(caloricChart.data.datasets[0].backgroundColor);
-  })
+  });
 }
 
-function generateCaloricBreakdown(nutrients, dataType, action, nutrientList) {
+function generateCaloricBreakdownSection(nutrients, dataType, action, nutrientList) {
   if (action === "drawPieChart") {
-    console.log('draw');
     drawCaloricBreakdownChart(nutrients, dataType);
   } else if (action === "writeAbsoluteData") {
-    // const nutrients = ['calories', 'protein', 'fat', 'carbohydrates'];
-    console.log('write');
-    console.log(nutrients);
-
     nutrients.forEach(nutrient => {
       writeNutrientsAbsoluteData(nutrient, nutrientList, dataType);
-    })
+    });
   }
 }
 
 // functions to trigger modal when a user returns and already have a meal plan generated from previous visit. User can then choose to resume previous session or reset to start from beginning
 function showReturningUserModal() {
   if (loadFromLocalStorage('loadMealPlan') === 'true' && !sessionStorage.getItem('modalShown')) {
-    console.log('its true')
     $('div.returning-user-modal').html(
-      `<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="false">
+      `<div class="modal fade" id="resumePrevSessionModal" tabindex="-1" aria-labelledby="resumePrevSession" aria-hidden="true" data-backdrop="false">
         <div class="modal-dialog">
           <div class="modal-content card">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Resume previous session?</h5>
+              <h5 class="modal-title" id="resumePrevSessionModalLabel">Resume previous session?</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -190,14 +181,14 @@ function showReturningUserModal() {
       </div>`
     );
   }
-  $('#exampleModal').modal('show');
+  $('#resumePrevSessionModal').modal('show');
   sessionStorage.setItem('modalShown', 'true');
 }
 
 function resumePreviousSession() {
-  if (window.location = 'index.html') {
+  if (window.location.toString().includes('index.html')) {
     window.location = 'recipe-randomizer.html#meal-plan-container';
   } else {
-    $('#exampleModal').modal('hide');
+    $('#resumePrevSessionModal').modal('hide');
   }
 }

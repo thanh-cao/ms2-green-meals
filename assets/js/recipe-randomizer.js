@@ -7,7 +7,6 @@ const intoleranceList = $('input[name="intolerances"]');
 let diet = 'vegetarian'; // make vegetarian as a default diet preference to give a visual hint to users that they can click and choose
 let intolerances = [];
 
-const totalNutrientsDisplay = $("#total-nutrients-absolute");
 const totalNutrientsChart = $("#total-nutrients-chart");
 
 const apiKey = "1f698cd1ba074580acc428ca007720bc";
@@ -17,7 +16,7 @@ let mealListId = [];
 
 $(document).ready(function() {
   showReturningUserModal();
-})
+});
 
 // event listeners
 // gather search query and then fetch data through API call
@@ -48,7 +47,6 @@ function handleUserMealPreferences() {
 function getUserDiet(e) {
   if (this.checked) {
     diet = this.labels[0].innerText;
-    console.log(diet);
   }
   
   // set visual cues for vegan diet to include dairy and egg as intolerances by default. Since vegan diet parameter already returns results excluding dairy and egg, it's not needed to also set intolerance param in this case.
@@ -71,10 +69,8 @@ function getUserDiet(e) {
 function getUserIntolerances(e) {
   if (this.checked) {
     intolerances.push(this.labels[0].innerText);
-    console.log(intolerances);
   } else {
     intolerances.splice(intolerances.indexOf(this.labels[0].innerText), 1);
-    console.log(intolerances);
   }
   saveToLocalStorage('userIntolerances', intolerances);
   return intolerances;
@@ -89,18 +85,14 @@ function fetchMealPlan() {
     })
   )
     .then(function (results) {
-      console.log(results);
-      console.log(results.meals);
-      console.log(results.nutrients);
       let mealList = results.meals;
 
       extractMealListId(mealList);
-      generateCaloricBreakdown(results.nutrients, 'mealPlanData', 'drawPieChart');
-      generateCaloricBreakdown(['calories', 'protein', 'fat', 'carbohydrates'], 'mealPlanData', 'writeAbsoluteData', results.nutrients);
+      generateCaloricBreakdownSection(results.nutrients, 'mealPlanData', 'drawPieChart');
+      generateCaloricBreakdownSection(['calories', 'protein', 'fat', 'carbohydrates'], 'mealPlanData', 'writeAbsoluteData', results.nutrients);
       saveToLocalStorage('totalNutrientBreakdown', results.nutrients);
     })
     .done(function () {
-      console.log(mealListId);
       writeMealPlan(mealListId);
     });
 }
@@ -109,9 +101,7 @@ function extractMealListId(mealList) {
   //empty previous mealListId array and then assign a new one for new meal plan
   mealListId = [];
   $.each(mealList, function (index, value) {
-    console.log(value.id);
     mealListId.push(value.id);
-    console.log(mealListId);
   });
   return mealListId;
 }
@@ -138,10 +128,8 @@ function writeMealPlan(mealListId) {
       );
     })
     .then(dataArray => {
-      console.log(dataArray);
       saveToLocalStorage('mealPlanData', dataArray);
       dataArray.forEach(data => {
-        console.log(data.id);
         let mealCardHtml = "";
         mealCardHtml = `
       <div class="card mb-3">
@@ -212,22 +200,16 @@ function writeMealCard(data) {
 function viewRecipeDetails() {
   $('div.meal-card-data > a').each(function () {
     $(this).click(function () {
-      console.log('card is clicked');
-      console.log($(this).attr('id'));
       saveToLocalStorage('recipeIdToDisplay', $(this).attr('id'));
-    })
-  })
+    });
+  });
 }
 
 // functions below to add click event to buttons to fetch new specific meal, and consequentially update nutrients data and caloric breakdown chart based on the new meal plan
 function findNewMeal(btn) {
   let retrievedMealPlan = loadFromLocalStorage('mealPlanData');
-  console.log($(btn));
   let mealCardData = $(btn).parents('div.card div.row').next();
-  console.log(mealCardData);
-  console.log(`current meal is ${mealCardData[0].firstElementChild.id}`);
-  let oldMeal = retrievedMealPlan.find(meal => meal.id === Number(mealCardData[0].firstElementChild.id))
-  console.log(`old meal is: ${oldMeal.title} ${oldMeal.id}`);
+  let oldMeal = retrievedMealPlan.find(meal => meal.id === Number(mealCardData[0].firstElementChild.id));
   mealCardData.empty();
 
   $.ajax({
@@ -236,18 +218,15 @@ function findNewMeal(btn) {
   }).then(function (data) {
     let results = data.results;
     let newMeal = results[Math.floor(Math.random() * results.length)];
-    console.log(`new meal id is: ${newMeal.id}`);
     saveToLocalStorage('newMeal', newMeal);
     mealCardData.html(writeMealCard(newMeal));  
     viewRecipeDetails();
   }).done(function () {
     let newMealFromStorage = loadFromLocalStorage('newMeal');
-    console.log(`new meal storage id is: ${newMealFromStorage.id}`);
     retrievedMealPlan.splice(retrievedMealPlan.indexOf(oldMeal), 1, newMealFromStorage);
-    console.log(retrievedMealPlan);
     saveToLocalStorage('mealPlanData', retrievedMealPlan);
     saveToLocalStorage('mealPlanDisplay', mealPlanDisplay[0].outerHTML);
-  })
+  });
   updateNewMealPlanNutrients();
 }
 
@@ -261,9 +240,7 @@ function updateNewMealPlanNutrients() {
     newTotalProtein += findNutrientAbsoluteData('protein', meal.nutrition.nutrients, 'mealData');
     newTotalFat += findNutrientAbsoluteData('fat', meal.nutrition.nutrients, 'mealData');
     newTotalCalories += findNutrientAbsoluteData('calories', meal.nutrition.nutrients, 'mealData');
-  })
-  console.log(typeof newTotalCarbs);
-  console.log('new total carbs is: ' + newTotalCarbs);
+  });
 
   newMealPlanNutrients = {
     carbohydrates: `${Math.round(newTotalCarbs)}`,
@@ -271,9 +248,8 @@ function updateNewMealPlanNutrients() {
     fat: `${Math.round(newTotalFat)}`,
     calories: `${Math.round(newTotalCalories)}`
   };
-  console.log(newMealPlanNutrients);
   saveToLocalStorage('totalNutrientBreakdown', newMealPlanNutrients);
 
-  generateCaloricBreakdown(newMealPlanNutrients, 'mealPlanData', 'drawPieChart');
-  generateCaloricBreakdown(['calories', 'protein', 'fat', 'carbohydrates'], 'mealPlanData', 'writeAbsoluteData', newMealPlanNutrients);
+  generateCaloricBreakdownSection(newMealPlanNutrients, 'mealPlanData', 'drawPieChart');
+  generateCaloricBreakdownSection(['calories', 'protein', 'fat', 'carbohydrates'], 'mealPlanData', 'writeAbsoluteData', newMealPlanNutrients);
 }

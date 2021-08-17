@@ -1,6 +1,5 @@
 $(document).ready(function () {
     let retrievedGroceryList = loadFromLocalStorage('groceryList');
-    console.log(retrievedGroceryList);
 
     if (!retrievedGroceryList || retrievedGroceryList.length === 0) {
         $('.section-card-wrapper.grocery').html(`
@@ -32,7 +31,7 @@ $(document).ready(function () {
 
     activateButtons(); // activate actions for grocery list items
     showReturningUserModal();
-})
+});
 
 function activateButtons() {
     let checkboxes = $('.item-checkbox');
@@ -43,8 +42,8 @@ function activateButtons() {
     checkboxes.each(function () {
         $(this).on('click', function () {
             $(this).parent().next().toggleClass('strikethrough').next().toggleClass('strikethrough');
-        })
-    })
+        });
+    });
 
     itemEditable.each(handleContentEditable);
     qtyEditable.each(handleContentEditable);
@@ -55,8 +54,8 @@ function activateButtons() {
 
             updateGroceryList(itemIndex, 'remove');
             $(this).parents()[1].remove();
-        })
-    })
+        });
+    });
 
     $('button.btn-reset').on('click', function () {
         $('.section-card-wrapper.grocery').html(`
@@ -64,16 +63,16 @@ function activateButtons() {
         <img src="assets/img/empty-grocery-list.jpg" class="w-100 h-auto" alt="Empty grocery cart">
         `);
         localStorage.removeItem('groceryList');
-    })
+    });
 }
 
 function handleContentEditable() {
     $(this).mouseenter(function() {
         $(this).append('<i class="fas fa-edit d-inline"></i>');
-    })
+    });
     $(this).mouseleave(function() {
         $(this).children('i').remove();
-    })
+    });
     $(this).blur(function() {
         const itemIndex = Number($(this).closest('div[data-index]').attr('data-index'));
 
@@ -82,7 +81,7 @@ function handleContentEditable() {
         } else if ($(this).hasClass('grocery-item-qty')) {
             updateGroceryList(itemIndex, 'edit', 'quantity',this.innerText);
         }
-    })
+    });
 }
 
 function updateGroceryList(index, action, key, value) {

@@ -1,12 +1,7 @@
 $(document).ready(function() {
     const recipeId = Number(loadFromLocalStorage('recipeIdToDisplay')); // convert Id from being a string loaded from localStorage to number
     const mealPlanData = loadFromLocalStorage('mealPlanData');
-    console.log(recipeId);
-    console.log(mealPlanData);
-
     const recipeData = mealPlanData.find(meal => meal.id === recipeId);
-    console.log(recipeData);
-
     let recipeInstructions = generateOrderedRecipeInstructions(recipeData);
     let ingredientList = generateIngredientList(recipeData);
 
@@ -18,15 +13,15 @@ $(document).ready(function() {
     $('.recipe-img').attr('alt', recipeData.title);
     $('#recipe-instructions').html(recipeInstructions);
 
-    generateCaloricBreakdown(recipeData.nutrition.caloricBreakdown, 'mealData', 'drawPieChart');
-    generateCaloricBreakdown(['calories', 'protein', 'fat', 'carbohydrates'], 'mealData', 'writeAbsoluteData', recipeData.nutrition.nutrients);
+    generateCaloricBreakdownSection(recipeData.nutrition.caloricBreakdown, 'mealData', 'drawPieChart');
+    generateCaloricBreakdownSection(['calories', 'protein', 'fat', 'carbohydrates'], 'mealData', 'writeAbsoluteData', recipeData.nutrition.nutrients);
 
     $('.back-to-meal-plan').on('click', function() {
         history.back();
-    })
+    });
     activateAddRemoveButton();
     showReturningUserModal();
-})
+});
 
 function activateAddRemoveButton() {
     checkIfItemsAreAlreadyAdded(); // by default, an ingredient item has "add" action to add the item to grocery list. If an item is already added in the list, give it 'remove' action
@@ -45,7 +40,7 @@ function activateAddRemoveButton() {
             action.addClass('remove');
             addOrRemoveFromGroceryList(action, 'add');
         }
-    })
+    });
 }
 
 function checkIfItemsAreAlreadyAdded() {
@@ -58,7 +53,7 @@ function checkIfItemsAreAlreadyAdded() {
             let ingredientItem = { name, quantity };
             let foundIndex = retrievedGroceryList.findIndex(groceryItem => {
                 if (groceryItem.name === ingredientItem.name && groceryItem.quantity === ingredientItem.quantity)
-                    return true
+                    return true;
             });
 
             if (foundIndex !== -1) {
@@ -66,7 +61,7 @@ function checkIfItemsAreAlreadyAdded() {
                 $(this).prev().prev().children().addClass('remove');
                 $(this).prev().prev().children().text('-');
             }
-        })
+        });
     }
 }
 
@@ -94,11 +89,11 @@ function generateOrderedRecipeInstructions(recipeData) {
         let instructionSteps = '<ol>';
         instructionArray[0].steps.forEach(step => {
             instructionSteps += `<li>${step.step}</li>`;
-        })
+        });
         instructionSteps += '</ol>';
         return instructionSteps;
     } else if (instructionArray.length === 0 && recipeData.sourceUrl) {
-        return `<p>Detailed instructions can be found at <a href="${recipeData.sourceUrl}" target="_blank">${recipeData.sourceName}</a></p>`
+        return `<p>Detailed instructions can be found at <a href="${recipeData.sourceUrl}" target="_blank">${recipeData.sourceName}</a></p>`;
     } else {
         return `<p>No detailed instructions found</p>`;
     }
@@ -118,10 +113,9 @@ function generateIngredientList(recipeData) {
                 <span class="ingredient-qty col-3 my-auto">${ingredient.amount} ${ingredient.unit}</span>
             </li>
             `;
-        })
+        });
         return ingredientRows;
     } else {
-        // $('.add-to-list-btn').hide();
-        return `<p>Ingredient list can be found at <a href="${recipeData.sourceUrl}" target="_blank">${recipeData.sourceName}</a></p>`
+        return `<p>Ingredient list can be found at <a href="${recipeData.sourceUrl}" target="_blank">${recipeData.sourceName}</a></p>`;
     }
 }

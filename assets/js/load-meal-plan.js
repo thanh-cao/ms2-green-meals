@@ -14,7 +14,7 @@ $(window).ready(function () {
                 if (this.id === diet) {
                     this.checked = true;
                 }
-            })
+            });
         }
 
         if (!intolerances) {
@@ -24,13 +24,13 @@ $(window).ready(function () {
                 if (intolerances.includes(capitalizeFirstLetter(this.id))) {
                     this.checked = true;
                 }
-            })
+            });
         }
 
         mealPlanDisplay.html(loadFromLocalStorage('mealPlanDisplay'));
         viewRecipeDetails();
         
-        generateCaloricBreakdown(mealPlanNutrients, 'mealPlanData', 'drawPieChart');
-        generateCaloricBreakdown(['calories', 'protein', 'fat', 'carbohydrates'], 'mealPlanData', 'writeAbsoluteData', mealPlanNutrients);
+        generateCaloricBreakdownSection(mealPlanNutrients, 'mealPlanData', 'drawPieChart');
+        generateCaloricBreakdownSection(['calories', 'protein', 'fat', 'carbohydrates'], 'mealPlanData', 'writeAbsoluteData', mealPlanNutrients);
     }
-})
+});
