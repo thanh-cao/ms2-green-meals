@@ -9,3 +9,10 @@ All markups of the application across pages were ran through the [W3C Markup Val
 ### W3C CSS Validator
 [W3C CSS Validator](https://jigsaw.w3.org/css-validator/) was utilized and the results show no errors. There are warnings that all the CSS variables that are declared in order to set color scheme for light/dark mode are unknown vendor extension. Since these are not relevant warnings, I decided to ignore them.
 ![CSS validator warnings](readme/css-validator-warnings.png)
+
+### Lighthouse audit
+Chrome DevTool's Lighthouse was used to audit the overall performance of the application. After adjusting all the codes following the suggestions from the evaluation, the final results are as in below:
+![Lighthouse evaluation](readme/lighthouse-audit.png)
+
+All measures returned satisfactory, except for Performance which fell a bit short at 82 points. Looking at the suggested opportunities which could help optimize the performance, I decided to not act upon them because Lighthouse suggest to eliminate or reduce unused CSS or JavaScript, all of which are core libraries I use to build the website, and therefore cannot be eliminated.
+![Optimization opportunities for performance](readme/lighthouse-performance-opportunity.png)
