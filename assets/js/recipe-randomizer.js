@@ -9,8 +9,8 @@ let intolerances = [];
 
 const totalNutrientsChart = $("#total-nutrients-chart");
 
-const apiKey = "1f698cd1ba074580acc428ca007720bc";
-const apiKey2 = "09c17d8e03d043c49e345a14a780221e"; // backup apiKey for use when daily quota is exceeded
+const apiKey2 = "1f698cd1ba074580acc428ca007720bc";
+const apiKey = "09c17d8e03d043c49e345a14a780221e"; // backup apiKey for use when daily quota is exceeded
 
 let mealListId = [];
 
