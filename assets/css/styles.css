@@ -151,6 +151,11 @@ h5 {
   color: var(--primary-color);
 }
 
+body.dark-mode a {
+  color: #91beff;
+  ;
+}
+
 .text-muted {
   color: var(--secondary-text) !important;
 }
@@ -310,9 +315,6 @@ form input[type="checkbox"] {
 form input:checked + label {
   background-color: var(--accent-color);
   border-radius: 10px;
-  border: 1rem solid var(--accent-color);
-  /* width: 100px;
-  height: 100px; */
 }
 
 /*----recipe details page*/
