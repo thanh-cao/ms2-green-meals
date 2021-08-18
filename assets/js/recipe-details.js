@@ -26,18 +26,18 @@ $(document).ready(function() {
 function activateAddRemoveButton() {
     checkIfItemsAreAlreadyAdded(); // by default, an ingredient item has "add" action to add the item to grocery list. If an item is already added in the list, give it 'remove' action
 
-    $('span.col-1').on('click', function() {
+    $('button.add-remove-item').on('click', function() {
         let action = $(this).children();
 
-        if (action.hasClass('remove')) {
-            action.removeClass('remove');
-            action.text('+');
-            action.addClass('add');
+        if (action.hasClass('bi-dash-circle')) {
+            action.removeClass('bi-dash-circle');
+            action.addClass('bi-plus-circle');
+            action.attr('aria-label', 'add item to grocery list');
             addOrRemoveFromGroceryList(action, 'remove');
         } else {
-            action.removeClass('add');
-            action.text('-');
-            action.addClass('remove');
+            action.removeClass('bi-plus-circle');
+            action.addClass('bi-dash-circle');
+            action.attr('aria-label', 'remove item from grocery list');
             addOrRemoveFromGroceryList(action, 'add');
         }
     });
@@ -57,9 +57,9 @@ function checkIfItemsAreAlreadyAdded() {
             });
 
             if (foundIndex !== -1) {
-                $(this).prev().prev().children().removeClass('add');
-                $(this).prev().prev().children().addClass('remove');
-                $(this).prev().prev().children().text('-');
+                $(this).prev().prev().find('i.bi').removeClass('bi-plus-circle');
+                $(this).prev().prev().find('i.bi').addClass('bi-dash-circle');
+                $(this).prev().prev().find('i.bi').attr('aria-label', 'remove item from grocery list');
             }
         });
     }
@@ -93,7 +93,7 @@ function generateOrderedRecipeInstructions(recipeData) {
         instructionSteps += '</ol>';
         return instructionSteps;
     } else if (instructionArray.length === 0 && recipeData.sourceUrl) {
-        return `<p>Detailed instructions can be found at <a href="${recipeData.sourceUrl}" target="_blank">${recipeData.sourceName}</a></p>`;
+        return `<p>Detailed instructions can be found at <a href="${recipeData.sourceUrl}" target="_blank" rel="noopener">${recipeData.sourceName}</a></p>`;
     } else {
         return `<p>No detailed instructions found</p>`;
     }
@@ -107,8 +107,14 @@ function generateIngredientList(recipeData) {
         recipeData.extendedIngredients.forEach(ingredient => {
             ingredientRows += `
             <li class="row mb-3 g-0 align-items-center">
-                <span class="col-1"><span class="add">+</span></span>
-                <span class="ingredient-img col-3"><img src="${ingredientImgBaseUrl}${ingredient.image}" width="50" alt="${ingredient.name}"></span>
+                <span class="col-1">
+                    <button class="add-remove-item">
+                        <i class="bi bi-plus-circle" aria-label="add item to grocery list"></i>    
+                    </button>
+                </span>
+                <span class="ingredient-img col-3">
+                    <img src="${ingredientImgBaseUrl}${ingredient.image}" width="50" alt="${ingredient.name}">
+                </span>
                 <span class="ingredient-name col-5 my-auto">${capitalizeFirstLetter(ingredient.name)}</span>
                 <span class="ingredient-qty col-3 my-auto">${ingredient.amount} ${ingredient.unit}</span>
             </li>
@@ -116,6 +122,6 @@ function generateIngredientList(recipeData) {
         });
         return ingredientRows;
     } else {
-        return `<p>Ingredient list can be found at <a href="${recipeData.sourceUrl}" target="_blank">${recipeData.sourceName}</a></p>`;
+        return `<p>Ingredient list can be found at <a href="${recipeData.sourceUrl}" target="_blank" rel="noopener">${recipeData.sourceName}</a></p>`;
     }
 }
