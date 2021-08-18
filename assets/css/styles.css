@@ -50,6 +50,17 @@ nav svg {
   fill: var(--primary-color);
 }
 
+nav .nav-link:hover {
+  text-decoration-line: underline;
+  text-decoration-color: var(--primary-color);
+  text-decoration-thickness: 5px;
+}
+.nav-link.active {
+  text-decoration-line: underline;
+  text-decoration-color: var(--primary-color);
+  text-decoration-thickness: 5px;
+}
+
 /* Theme switch toggle adapted from Matt Smith's Codepen */
 .theme-switch {
   display: inline-block;
