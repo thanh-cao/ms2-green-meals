@@ -1,3 +1,10 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v8.3.6,
+* Autoprefixer: v10.3.1
+* Browsers: last 4 version
+*/
+
 /*----Declare color variables for light theme and dark theme*/
 :root {
   --background: #f6ffd7;
@@ -51,12 +58,16 @@ nav svg {
 }
 
 nav .nav-link:hover {
+  -webkit-text-decoration-line: underline;
   text-decoration-line: underline;
+  -webkit-text-decoration-color: var(--primary-color);
   text-decoration-color: var(--primary-color);
   text-decoration-thickness: 5px;
 }
 .nav-link.active {
+  -webkit-text-decoration-line: underline;
   text-decoration-line: underline;
+  -webkit-text-decoration-color: var(--primary-color);
   text-decoration-color: var(--primary-color);
   text-decoration-thickness: 5px;
 }
@@ -81,6 +92,8 @@ nav .nav-link:hover {
   position: absolute;
   right: 0;
   top: 0;
+  -webkit-transition: 0.4s;
+  -o-transition: 0.4s;
   transition: 0.4s;
 }
 
@@ -91,6 +104,8 @@ nav .nav-link:hover {
   height: 1.15rem;
   left: 4px;
   position: absolute;
+  -webkit-transition: 0.4s;
+  -o-transition: 0.4s;
   transition: 0.4s;
   width: 1.15rem;
 }
@@ -100,6 +115,8 @@ nav .nav-link:hover {
 }
 
 .theme-switch input:checked + .slider:before {
+  -webkit-transform: translateX(1.1rem);
+  -ms-transform: translateX(1.1rem);
   transform: translateX(1.1rem);
 }
 
@@ -139,6 +156,8 @@ footer {
 
 .social-links i:hover {
   background-color: var(--primary-color-dark);
+  -webkit-transition: background-color 0.35s ease-in-out;
+  -o-transition: background-color 0.35s ease-in-out;
   transition: background-color 0.35s ease-in-out;
 }
 
@@ -153,7 +172,6 @@ h5 {
 
 body.dark-mode a {
   color: #91beff;
-  ;
 }
 
 .text-muted {
@@ -225,6 +243,8 @@ span.icon-text {
   margin: 1rem 1rem;
   padding-top: 2rem;
   padding-bottom: 2rem;
+  -webkit-box-shadow: rgb(50 50 93 / 25%) 0px 13px 27px -5px,
+    rgb(0 0 0 / 30%) 0px 8px 16px -8px;
   box-shadow: rgb(50 50 93 / 25%) 0px 13px 27px -5px,
     rgb(0 0 0 / 30%) 0px 8px 16px -8px;
 }
@@ -232,6 +252,8 @@ span.icon-text {
 .meal-card-data a {
   text-decoration: none;
   color: inherit;
+  -webkit-transition: border 0.15s ease-in-out;
+  -o-transition: border 0.15s ease-in-out;
   transition: border 0.15s ease-in-out;
 }
 
@@ -245,6 +267,7 @@ span.icon-text {
 
 .card-body:hover .card-title {
   text-decoration: underline;
+  -webkit-text-decoration-color: var(--primary-color);
   text-decoration-color: var(--primary-color);
 }
 
@@ -253,8 +276,14 @@ span.icon-text {
   background: url("../img/index-background.jpg") center center / cover no-repeat;
   position: relative;
   z-index: 1;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
 }
 
@@ -334,7 +363,6 @@ button.add-remove-item {
   background-color: transparent;
   border: 0px solid transparent;
   padding: 0;
-  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 
 i.bi-plus-circle {
@@ -355,7 +383,7 @@ i.bi-dash-circle {
   cursor: pointer;
 }
 
-i.bi-dash-circle:hover{
+i.bi-dash-circle:hover {
   color: white;
   border-radius: 50%;
   background-color: var(--remove);
