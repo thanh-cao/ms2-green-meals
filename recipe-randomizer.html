@@ -190,130 +190,42 @@
 
             <div class="row">
                 <div id="meal-plan-container" class="col-12 col-lg-7">
-                    <!-- breakfast meal card -->
-                    <!-- <div class="card mb-3">
-                        <div class="row row-cols-2 pt-3 pb-2">
-                            <h3 class="col my-auto ps-4">Breakfast</h3>
-                            <div class="col text-end pe-4">
-                                <a href="#meal-plan" class="btn btn-secondary"><i class="fas fa-random"></i></a>
-                            </div>
-                        </div>
-                        <div class="row g-0">
-                            <div class="col-md-4 my-auto">
-                                <img src="https://healthynibblesandbits.com/wp-content/uploads/2014/08/Chocolate-Overnight-Oats-Berries-1.jpg" class="w-100 h-auto px-3" alt="">
-                            </div>
-                            <div class="col-md-8">
-                                <div class="card-body">
-                                    <h4 class="card-title">Chocolate Overnight Oats & Berries</h4>
-                                    <p class="card-text"><small class="text-muted">Duration: <span id="cooking-duration">15 mins</span></small></p>
-                                    <div class="row row-cols-2">
-                                        <div class="col text-center">
-                                            <span id="calories-dish" class="border py-2 px-3 d-block mb-2">Calories: 346</span>
-                                            <span id="fat-dish" class="border py-2 px-3 d-block">Fat: 8g</span>
-                                        </div>
-                                        <div class="col text-center">
-                                            <span id="protein-dish" class="border py-2 px-3 d-block mb-2">Protein: 19g</span>
-                                            <span id="carbs-dish" class="border py-2 px-3 d-block">Carbs: 53g</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
-                    <!-- lunch meal card -->
-                    <!-- <div class="card mb-3">
-                        <div class="row row-cols-2 pt-3 pb-2">
-                            <h3 class="col ps-4 my-auto">Lunch</h3>
-                            <div class="col text-end pe-4">
-                                <a href="#meal-plan" class="btn btn-secondary"><i class="fas fa-random"></i></a>
-                            </div>
-                        </div>
-                        <div class="row g-0">
-                            <div class="col-md-4 my-auto">
-                                <img src="https://healthynibblesandbits.com/wp-content/uploads/2014/08/Chocolate-Overnight-Oats-Berries-1.jpg" class="w-100 h-auto px-3" alt="">
-                            </div>
-                            <div class="col-md-8">
-                                <div class="card-body">
-                                    <h4 class="card-title">Chocolate Overnight Oats & Berries</h4>
-                                    <p class="card-text"><small class="text-muted">Duration: <span id="cooking-duration">15 mins</span></small></p>
-                                    <div class="row row-cols-2">
-                                        <div class="col text-center">
-                                            <span id="calories-dish" class="border py-2 px-3 d-block mb-2">Calories: 346</span>
-                                            <span id="fat-dish" class="border py-2 px-3 d-block">Fat: 8g</span>
-                                        </div>
-                                        <div class="col text-center">
-                                            <span id="protein-dish" class="border py-2 px-3 d-block mb-2">Protein: 19g</span>
-                                            <span id="carbs-dish" class="border py-2 px-3 d-block">Carbs: 53g</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
-                    <!-- dinner meal card -->
-                    <!-- <div class="card mb-3">
-                        <div class="row row-cols-2 pt-3 pb-2">
-                            <h3 class="col ps-4 my-auto">Dinner</h3>
-                            <div class="col text-end pe-4">
-                                <a href="#meal-plan" class="btn btn-secondary"><i class="fas fa-random"></i></a>
-                            </div>
-                        </div>
-                        <div class="row g-0">
-                            <div class="col-md-4 my-auto">
-                                <img src="https://healthynibblesandbits.com/wp-content/uploads/2014/08/Chocolate-Overnight-Oats-Berries-1.jpg" class="w-100 h-auto px-3" alt="">
-                            </div>
-                            <div class="col-md-8">
-                                <div class="card-body">
-                                    <h4 class="card-title">Chocolate Overnight Oats & Berries</h4>
-                                    <p class="card-text"><small class="text-muted">Duration: <span id="cooking-duration">15 mins</span></small></p>
-                                    <div class="row row-cols-2">
-                                        <div class="col text-center">
-                                            <span id="calories-dish" class="border py-2 px-3 d-block mb-2">Calories: 346</span>
-                                            <span id="fat-dish" class="border py-2 px-3 d-block">Fat: 8g</span>
-                                        </div>
-                                        <div class="col text-center">
-                                            <span id="protein-dish" class="border py-2 px-3 d-block mb-2">Protein: 19g</span>
-                                            <span id="carbs-dish" class="border py-2 px-3 d-block">Carbs: 53g</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
+                    <!-- meal plan data is populated dynamically -->
                 </div>
 
                 <!-- total daily nutrient breakdown -->
                 <div class="col-12 col-lg-5">
                     <div class="caloric-breakdown-container">
-                    <h5 class="text-uppercase text-center text-white pt-3">Total Caloric Breakdown</h5>
-                    <div class="row py-3">
-                        <div class="col-12 col-sm-6 col-lg-12 mb-lg-4 chart-container"></div>
-                        <div id="total-nutrients-absolute" class="col-12 col-sm-6 col-lg-12 text-center text-sm-start text-lg-center my-auto pt-3">
-                            <div class="clearfix">
-                                <div class="d-inline-block text-end w-25 me-2 text-white">Calories:</div>
-                                <div class="d-inline-block w-25 text-start text-white"><span class="calories"></span></div>
-                            </div>
-                            <div class="clearfix">
-                                <div class="protein-color d-inline-block text-end w-25 me-2">Protein:</div>
-                                <div class="protein-color d-inline-block w-25 text-start"><span class="protein"></span>g</div>
-                            </div>
-                            <div class="clearfix">
-                                <div class="fat-color d-inline-block text-end w-25 me-2">Fat:</div>
-                                <div class="fat-color d-inline-block w-25 text-start"><span class="fat"></span>g</div>
-                            </div>
-                            <div class="clearfix">
-                                <div class="carbs-color d-inline-block text-end w-25 me-2">Carbs:</div>
-                                <div class="carbs-color d-inline-block w-25 text-start"><span class="carbohydrates"></span>g</div>
+                        <h5 class="text-uppercase text-center text-white pt-3">Total Caloric Breakdown</h5>
+                        <div class="row py-3">
+                            <div class="col-12 col-sm-6 col-lg-12 mb-lg-4 chart-container"></div>
+
+                            <div id="total-nutrients-absolute" class="col-12 col-sm-6 col-lg-12 text-center text-sm-start text-lg-center my-auto pt-3">
+                                <div class="clearfix">
+                                    <div class="d-inline-block text-end w-25 me-2 text-white">Calories:</div>
+                                    <div class="d-inline-block w-25 text-start text-white"><span class="calories"></span></div>
+                                </div>
+                                <div class="clearfix">
+                                    <div class="protein-color d-inline-block text-end w-25 me-2">Protein:</div>
+                                    <div class="protein-color d-inline-block w-25 text-start"><span class="protein"></span>g</div>
+                                </div>
+                                <div class="clearfix">
+                                    <div class="fat-color d-inline-block text-end w-25 me-2">Fat:</div>
+                                    <div class="fat-color d-inline-block w-25 text-start"><span class="fat"></span>g</div>
+                                </div>
+                                <div class="clearfix">
+                                    <div class="carbs-color d-inline-block text-end w-25 me-2">Carbs:</div>
+                                    <div class="carbs-color d-inline-block w-25 text-start"><span class="carbohydrates"></span>g</div>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     </div>
                 </div>
             </div>
         </section>
     </main>
 
-    <footer class="w-100 align-self-center">
+    <footer class="w-100 align-self-center mt-3">
         <div class="row g-0 text-center">
             <div class="col-4">
                 <img src="assets/img/green-meals-logo-icon.svg" alt="Green Meals logo" height="60" width="60">
