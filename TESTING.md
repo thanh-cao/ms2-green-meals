@@ -84,3 +84,21 @@ All JavaScript codes were parsed into [JSHint](https://jshint.com/) in order to 
 
 12. As a returning user, I want to be able to reset everything from last visit in order to get new recipe suggestions and new grocery list.
 * The modal for returning users has a "*Reset*" button which will reset all data from previous visit so that users can start from the beginning with empty meal plan and grocery list.
+
+## Further testing
+A lot of testing was done intensively during development to ensure that everything functions the way they should be and feedback is given to users at each interaction.
+* Navigation bar: all the links go to the correct location with indicator to inform users where they are on the application.
+* Light mode / dark mode: is toggled accordingly. The chosen theme mode is applied throughout all the pages as well as when users reload the page or return to the page.
+* Responsiveness on different devices: application was thoroughly reviewed on different physical devices as well as Chrome DevTool.
+* Diet preference and intolerance selection panel: a visual cue is shown when an icon is selected to inform users of their selection. By default, if Vegan is chosen as diet preference, Dairy and Egg are chosen as intoleraces and cannot be deselected upon vegan option to ensure users that vegan preference doesn't include the said ingredients.
+* Randomize buttons: buttons have hover effects to inform users which button is being clicked. When buttons are clicked, users should immediately see new meal plan or new single meal being displayed.
+* Reset button: reset all saved data in localStorage as well as clear data being displayed on screen.
+* Nutrient breakdown section for meal plan: should update automatically as users fetch for new meals.
+* Add/Remove ingredient item to grocery list:
+  * When users click the green `+` button, it should change to red `-` button and vice versa. This is to inform users that the selected item has been added or removed from grocery list.
+  * When users reload recipe details page, the ingredient items that have been added to grocery list should show red `-` button to indicate that items have already been added and users can choose to remove them from the list.
+* Grocery list:
+  * Checkbox: upon checked, the selected item's name and quantity will be striked through.
+  * Edit item's name and quantity: by tapping the fields, users should be able to edit the name and quantity. These information should be saved on localStorage for later use.
+  * Remove: item is removed from the list completely.
+  * Reset button: clear the grocery list and show empty list message.
