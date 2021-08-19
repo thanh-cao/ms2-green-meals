@@ -89,7 +89,16 @@ function fetchMealPlan() {
       saveToLocalStorage('totalNutrientBreakdown', results.nutrients); // for later use on load-meal-plan.js
       writeMealPlan(mealListId);
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      $('section#meal-plan').html(`
+        <div class="text-center container mt-3">
+          <h3>Ooops...</h3>
+          <img src="assets/img/error.png" alt="error" class="img w-25">
+          <p>Something went wrong under cooking. Please try again!<br>If the error persists, please send an email to <a href="mailto:kimthanh.cao@gmail.com?subject=Green Meals issue">our developer</a> and we will have it cooked!</p>
+        </div>
+      `);
+      console.log(err);
+    });
 }
 
 function extractMealListId(mealList) {
@@ -147,6 +156,13 @@ function writeMealPlan(mealListId) {
       viewRecipeDetails();
     })
     .catch(err => {
+      $('section#meal-plan').html(`
+        <div class="text-center container mt-3">
+          <h5>Ooops...</h5>
+          <img src="assets/img/error.png" alt="error" class="img w-25">
+          <p>Something went wrong under cooking. Please try again!<br>If the error persists, please send an email to <a href="mailto:kimthanh.cao@gmail.com?subject=Green Meals issue">our developer</a> and we will have it cooked!</p>
+        </div>
+      `);
       console.log(err);
     });
 }
@@ -222,7 +238,16 @@ function findNewMeal(btn) {
     saveToLocalStorage('mealPlanData', retrievedMealPlan);
     saveToLocalStorage('mealPlanDisplay', mealPlanDisplay[0].innerHTML);
   })
-  .catch(err => console.log(err));
+  .catch(err => {
+    $('section#meal-plan').html(`
+      <div class="text-center container mt-3">
+        <h5>Ooops...</h5>
+        <img src="assets/img/error.png" alt="error" class="img w-25">
+        <p>Something went wrong under cooking. Please try again!<br>If the error persists, please send an email to <a href="mailto:kimthanh.cao@gmail.com?subject=Green Meals issue">our developer</a> and we will have it cooked!</p>
+      </div>
+    `);
+    console.log(err);
+  });
 
   updateNewMealPlanNutrients();
 }
