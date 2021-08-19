@@ -48,7 +48,7 @@ function getUserDiet(e) {
   if (this.checked) {
     diet = this.labels[0].innerText;
   }
-  
+
   // set visual cues for vegan diet to include dairy and egg as intolerances by default. Since vegan diet parameter already returns results excluding dairy and egg, it's not needed to also set intolerance param in this case.
   if (diet === 'Vegan') {
     intoleranceList[0].checked = true;
@@ -78,29 +78,24 @@ function getUserIntolerances(e) {
 
 // The results from ajax do not have data on the meals' image urls. After api call is finished, the function will extract IDs of all the meals into an array and then the meal ID array is parsed into another api call in order to get all the neccessary data to then finally write to document
 function fetchMealPlan() {
-  $.when(
-    $.ajax({
-      url: `https://api.spoonacular.com/mealplanner/generate?apiKey=${apiKey}&timeFrame=day&diet=${diet.toLowerCase()}&exclude=${intolerances.toString()},drinks,beverages,alcohol`,
-      method: "GET"
-    })
-  )
-    .then(function (results) {
+  fetch(`https://api.spoonacular.com/mealplanner/generate?apiKey=${apiKey}&timeFrame=day&diet=${diet.toLowerCase()}&exclude=${intolerances.toString()},drinks,beverages,alcohol`)
+    .then(response => response.json())
+    .then(results => {
       let mealList = results.meals;
 
       extractMealListId(mealList);
       generateCaloricBreakdownSection(results.nutrients, 'mealPlanData', 'drawPieChart');
       generateCaloricBreakdownSection(['calories', 'protein', 'fat', 'carbohydrates'], 'mealPlanData', 'writeAbsoluteData', results.nutrients);
-      saveToLocalStorage('totalNutrientBreakdown', results.nutrients);
-    })
-    .done(function () {
+      saveToLocalStorage('totalNutrientBreakdown', results.nutrients); // for later use on load-meal-plan.js
       writeMealPlan(mealListId);
-    });
+    })
+    .catch(err => console.log(err));
 }
 
 function extractMealListId(mealList) {
   //empty previous mealListId array and then assign a new one for new meal plan
   mealListId = [];
-  $.each(mealList, function (index, value) {
+  $.each(mealList, function(index, value) {
     mealListId.push(value.id);
   });
   return mealListId;
@@ -145,6 +140,7 @@ function writeMealPlan(mealListId) {
       </div>
       `;
         mealPlanDisplay.append(mealCardHtml);
+        //save meal plan html to localStorage for use on load-meal-plan.js
         saveToLocalStorage('loadMealPlan', 'true');
         saveToLocalStorage('mealPlanDisplay', mealPlanDisplay[0].innerHTML);
       });
@@ -198,8 +194,8 @@ function writeMealCard(data) {
 
 // function to add 'click' event listener for meal card to store meal ID being clicked in order to load the correct data at recipe-details page
 function viewRecipeDetails() {
-  $('div.meal-card-data > a').each(function () {
-    $(this).click(function () {
+  $('div.meal-card-data > a').each(function() {
+    $(this).click(function() {
       saveToLocalStorage('recipeIdToDisplay', $(this).attr('id'));
     });
   });
@@ -212,21 +208,22 @@ function findNewMeal(btn) {
   let oldMeal = retrievedMealPlan.find(meal => meal.id === Number(mealCardData[0].firstElementChild.id));
   mealCardData.empty();
 
-  $.ajax({
-    url: `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&diet=${diet}&intolerances=${intolerances.toString().toLowerCase()}&number=30&offset=3&addRecipeNutrition=true&type=${$(btn).closest('.meal-type-title').text().toLowerCase()}`,
-    method: "GET"
-  }).then(function (data) {
+  fetch(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&diet=${diet}&intolerances=${intolerances.toString().toLowerCase()}&number=30&offset=3&addRecipeNutrition=true&type=${$(btn).closest('.meal-type-title').text().toLowerCase()}`)
+  .then(response => response.json())
+  .then(data => {
     let results = data.results;
-    let newMeal = results[Math.floor(Math.random() * results.length)];
-    saveToLocalStorage('newMeal', newMeal);
-    mealCardData.html(writeMealCard(newMeal));  
+    let newMeal = results[Math.floor(Math.random() * results.length)]; // new meal is picked by getting a random item from results array by generating a random index
+
+    mealCardData.html(writeMealCard(newMeal));
     viewRecipeDetails();
-  }).done(function () {
-    let newMealFromStorage = loadFromLocalStorage('newMeal');
-    retrievedMealPlan.splice(retrievedMealPlan.indexOf(oldMeal), 1, newMealFromStorage);
+
+    // update/save new meal plan and html to localStorage for use on load-meal-plan.js
+    retrievedMealPlan.splice(retrievedMealPlan.indexOf(oldMeal), 1, newMeal);
     saveToLocalStorage('mealPlanData', retrievedMealPlan);
-    saveToLocalStorage('mealPlanDisplay', mealPlanDisplay[0].outerHTML);
-  });
+    saveToLocalStorage('mealPlanDisplay', mealPlanDisplay[0].innerHTML);
+  })
+  .catch(err => console.log(err));
+
   updateNewMealPlanNutrients();
 }
 
@@ -248,7 +245,7 @@ function updateNewMealPlanNutrients() {
     fat: `${Math.round(newTotalFat)}`,
     calories: `${Math.round(newTotalCalories)}`
   };
-  saveToLocalStorage('totalNutrientBreakdown', newMealPlanNutrients);
+  saveToLocalStorage('totalNutrientBreakdown', newMealPlanNutrients); // for later use on load-meal-plan.js
 
   generateCaloricBreakdownSection(newMealPlanNutrients, 'mealPlanData', 'drawPieChart');
   generateCaloricBreakdownSection(['calories', 'protein', 'fat', 'carbohydrates'], 'mealPlanData', 'writeAbsoluteData', newMealPlanNutrients);
