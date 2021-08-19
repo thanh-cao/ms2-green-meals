@@ -215,6 +215,7 @@ There are endless possibilities that can be implemented in the future. To name a
 * [Google Fonts](https://fonts.google.com/) - to import Merienda and Montserrat font.
 * [Font Awesome](https://fontawesome.com/), [Flaticon](https://www.flaticon.com/), and [Freepik](https://www.freepik.com/) - implement icons for navigation menu, social links, diet and intolerances section, project's logo.
 * [Pic Resize](https://picresize.com/) - to resize large images.
+* [Autoprefixer CSS online](https://autoprefixer.github.io/) - to parse CSS and add vendor prefixes.
 
 ## Testing
 Testing process is in its own section [here](TESTING.md).
