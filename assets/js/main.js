@@ -1,20 +1,4 @@
 // main.js file contains functions that can be used throughout all the pages
-
-// light/dark theme toggle
-const themeToggle = $('.theme-switch input[type="checkbox"]');
-const themePreference = loadFromLocalStorage('theme');
-
-themeToggle.on('change', toggleDarkMode);
-
-if (themePreference === 'dark') {
-  $('body').addClass('dark-mode');
-  themeToggle.prop('checked', true);
-}
-
-$(document).ready(function() {
-  showReturningUserModal();
-});
-
 function toggleDarkMode(e) {
   if (e.target.checked) {
     $('body').addClass('dark-mode');
@@ -22,6 +6,19 @@ function toggleDarkMode(e) {
   } else {
     $('body').removeClass('dark-mode');
     saveToLocalStorage('theme', 'light');
+  }
+}
+
+function setThemePreference() {
+  // light/dark theme toggle
+  const themeToggle = $('.theme-switch input[type="checkbox"]');
+  const themePreference = loadFromLocalStorage('theme');
+
+  themeToggle.on('change', toggleDarkMode);
+
+  if (themePreference === 'dark') {
+    $('body').addClass('dark-mode');
+    themeToggle.prop('checked', true);
   }
 }
 
@@ -43,6 +40,10 @@ function resetLocalStorage() {
   localStorageKeys.forEach(key => {
     localStorage.removeItem(key);
   });
+
+  if ($('#resumePrevSessionModal')) {
+    $('#resumePrevSessionModal').modal('hide');
+  }
 }
 
 function capitalizeFirstLetter(string) {
@@ -50,14 +51,6 @@ function capitalizeFirstLetter(string) {
 }
 
 // functions to find the needed nutrient from a list and then write that nutrient's absolute value which can be used in recipe-randomizer.html and recipe-details.html
-function writeNutrientsAbsoluteData(nutrient, nutrientList, dataType) {
-  let amount = findNutrientAbsoluteData(nutrient, nutrientList, dataType);
-  $(`.${nutrient}`).each(function() {
-    $(this).text(''); // clear previous data
-    return $(this).text(amount); // write new data
-  });
-}
-
 function findNutrientAbsoluteData(nutrient, nutrientList, dataType) {
   if (dataType === 'mealPlanData') {
     return nutrientList[nutrient];
@@ -65,6 +58,16 @@ function findNutrientAbsoluteData(nutrient, nutrientList, dataType) {
     let found = nutrientList.find(element => element.name === capitalizeFirstLetter(nutrient));
     return found.amount;
   }
+}
+
+function writeNutrientsAbsoluteData(nutrients, nutrientList, dataType) {
+  nutrients.forEach(nutrient => {
+    let amount = findNutrientAbsoluteData(nutrient, nutrientList, dataType);
+    $(`.${nutrient}`).each(function() {
+      $(this).text(''); // clear previous data
+      return $(this).text(amount); // write new data
+    });
+  });
 }
 
 // get background colors for the 3 nutrients accordingly to the theme chosen from css variables
@@ -75,10 +78,15 @@ function getNutrientBackgroundColors() {
   return [carbsColor, fatColor, proteinColor];
 }
 
+function updatePieChartColors() {
+  caloricChart.data.datasets[0].backgroundColor = getNutrientBackgroundColors();
+  caloricChart.update();
+}
+
 // functions to compile neccesary configurations and then draw pie chart using chart.js to show caloric percentage breakdown of nutrients
 function compilePieChartConfigs(nutrients, dataType) {
   let carbsCalories, proteinCalories, fatCalories;
-  
+
   // formula to calculate caloric percentage from fat, protein, carbs is based on Jim Painter's explanation https://www.scientificamerican.com/article/how-do-food-manufacturers/
   if (dataType === 'mealPlanData') {
     carbsCalories = nutrients.carbohydrates * 4 / nutrients.calories * 100;
@@ -141,24 +149,19 @@ function drawCaloricBreakdownChart(nutrients, dataType) {
     caloricChart = new Chart($(this), chartConfigs);
   });
 
-  // update background color of chart's data based on chosen theme
-  themeToggle.on('change', function() {
-    caloricChart.data.datasets[0].backgroundColor = getNutrientBackgroundColors();
-    caloricChart.update();
-  });
-}
-
-function generateCaloricBreakdownSection(nutrients, dataType, action, nutrientList) {
-  if (action === "drawPieChart") {
-    drawCaloricBreakdownChart(nutrients, dataType);
-  } else if (action === "writeAbsoluteData") {
-    nutrients.forEach(nutrient => {
-      writeNutrientsAbsoluteData(nutrient, nutrientList, dataType);
-    });
-  }
+  // update background color of chart's data based on theme toggle
+  $('.theme-switch input[type="checkbox"]').on('change', updatePieChartColors);
 }
 
 // functions to trigger modal when a user returns and already have a meal plan generated from previous visit. User can then choose to resume previous session or reset to start from beginning
+function resumePreviousSession() {
+  if (window.location.toString().includes('index.html') || !loadFromLocalStorage('groceryList')) {
+    window.location = 'recipe-randomizer.html#meal-plan-container';
+  } else {
+    $('#resumePrevSessionModal').modal('hide');
+  }
+}
+
 function showReturningUserModal() {
   if (loadFromLocalStorage('loadMealPlan') === 'true' && !sessionStorage.getItem('modalShown')) {
     $('div.returning-user-modal').html(
@@ -185,10 +188,7 @@ function showReturningUserModal() {
   sessionStorage.setItem('modalShown', 'true');
 }
 
-function resumePreviousSession() {
-  if (window.location.toString().includes('index.html')) {
-    window.location = 'recipe-randomizer.html#meal-plan-container';
-  } else {
-    $('#resumePrevSessionModal').modal('hide');
-  }
-}
+$(document).ready(function() {
+  setThemePreference();
+  showReturningUserModal();
+});
