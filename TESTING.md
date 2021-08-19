@@ -102,3 +102,23 @@ A lot of testing was done intensively during development to ensure that everythi
   * Edit item's name and quantity: by tapping the fields, users should be able to edit the name and quantity. These information should be saved on localStorage for later use.
   * Remove: item is removed from the list completely.
   * Reset button: clear the grocery list and show empty list message.
+
+## Known bugs and issues
+1. Data quality from Spoonacular Food API
+* When fetching for meal plan or new meal, Spoonacular Food API suggests meals which are not as desirable, noticably for breakfast suggestion when `Hard Candy`, `Breakfast Martini`, or other alcoholic beverages show up. After testing out all the possible parameters even though they are not written on Spoonacular's documentations, I have managed to reduce the frequency of appearances for cocktail.
+
+![Undesirable meal suggestion](readme/issue-apidata-quality.png)
+
+* Some meals have very low image quality and that causes the image pixelated at larger screens. Furthermore, some have incorrect image for the meals as can be seen below.
+
+![Incorrect meal image](readme/issue-incorrect-meal-image.jpg)
+
+![Incorrect meal image](readme/issue-incorrect-meal-image2.jpg)
+
+* Some meals don't have complete data on instruction steps.
+
+![Meal lacks complate instruction steps](readme/issue-apidata-quality-recipe-info.png)
+
+2. Dark mode toggle sometimes flicker upon reload or going to a new page
+3. Content editable on grocery page for item name and quantity has a bug when all the text inside the field is deleted and new texts are typed, new texts are not registered upon blurred.
+4. The current Spoonacular API key is free, and therefore has a limit of 150 points a day. 
