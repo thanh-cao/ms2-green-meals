@@ -52,7 +52,7 @@ function writeRecipeData(recipeData) {
     $('#servings').text(recipeData.servings);
     $('.recipe-img').attr('src', recipeData.image);
     $('.recipe-img').attr('alt', recipeData.title);
-    $('#recipe-instructions').html(recipeInstructions);
+    $('.recipe-instructions').append(recipeInstructions);
 }
 
 function loadRecipeDetails() {

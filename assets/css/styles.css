@@ -392,10 +392,18 @@ i.bi-dash-circle:hover {
     margin-left: auto;
     margin-right: auto;
   }
+
+  .recipe-img {
+    width: 50%!important;
+  }
 }
 
 @media (min-width: 992px) {
   .recipe-nutrient-breakdown {
     border-left: 1px solid var(--primary-color);
+  }
+
+  .recipe-instructions {
+    width: 80%;
   }
 }
