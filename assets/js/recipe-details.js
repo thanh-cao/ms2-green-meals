@@ -148,6 +148,6 @@ $(document).ready(function() {
     !loadFromLocalStorage('recipeIdToDisplay') ? displayEmptyRecipePage() : (loadRecipeDetails(), activateAddRemoveButton());
 
     $('.back-to-meal-plan').on('click', function() {
-        window.location = 'recipe-randomizer.html'
+        window.location = 'recipe-randomizer.html';
     });
 });

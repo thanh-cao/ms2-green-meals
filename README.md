@@ -7,7 +7,7 @@ Project Green Meals is a web-based recipe generator app which helps make it easi
 ## Showcase
 ![Responsive mockups](readme/responsive-mockups.png)*Mockup of project Green Meals on responsive devices*
 
-[Link to live project](thanh-cao.github.io/ms2-green-meals/)
+[Link to live project](http://thanh-cao.github.io/ms2-green-meals/)
 
 ## Table of Contents
 

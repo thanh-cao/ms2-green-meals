@@ -7,7 +7,11 @@ During the development process, Chrome DevTools was employed greatly in order to
 All markups of the application across pages were ran through the [W3C Markup Validator](https://validator.w3.org/nu/). There were only minor errors such as typo mistakes, missing alt attribute on image, or missing `"` sign. They were all fixed accordingly to show no errors afterwards.
 
 ### W3C CSS Validator
-[W3C CSS Validator](https://jigsaw.w3.org/css-validator/) was utilized and the results show no errors. There are warnings that all the CSS variables that are declared in order to set color scheme for light/dark mode are unknown vendor extension. Since these are not relevant warnings, I decided to ignore them.
+[W3C CSS Validator](https://jigsaw.w3.org/css-validator/) was utilized and the results show errors that property `text-decoration-thickness` doesn't exist.
+![W3C CSS error](readme/testing-css-validator-error.png)
+When I read more about this property on [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-thickness), I found out that this property was called `text-decoration-width` before and got the new name in 2019 and it's not supported on Internet Explorer and Firefox for Android. Microsoft has stopped developing Internet Explorer and Firefox for Android accounts for only [0.48%](https://gs.statcounter.com/browser-market-share/mobile/worldwide/#monthly-202105-202105-bar) usage share of mobile browsers as of May 2021. Therefore I decided to ignore this error.
+
+There are also warnings that all the CSS variables that are declared in order to set color scheme for light/dark mode are unknown vendor extension. Since these are not relevant warnings, I decided to ignore them.
 ![CSS validator warnings](readme/testing-css-validator-warnings.png)
 
 ### Lighthouse audit
