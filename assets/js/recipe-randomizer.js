@@ -18,7 +18,7 @@ let mealListId = [];
 function writeMealCardTitle(index) {
   let title;
 
-  switch(index) {
+  switch (index) {
     case 0:
       title = 'Breakfast';
       break;
@@ -52,7 +52,7 @@ function writeMealCard(data) {
                 <div class="row row-cols-2">
                     <div class="col text-center">
                         <span class="border py-2 px-3 d-block mb-2">Calories: ${findNutrientAbsoluteData('calories', data.nutrition.nutrients, 'mealData')}</span>
-                        <span class="border py-2 px-3 d-block">Fat: ${findNutrientAbsoluteData('fat',data.nutrition.nutrients, 'mealData')}g</span>
+                        <span class="border py-2 px-3 d-block">Fat: ${findNutrientAbsoluteData('fat', data.nutrition.nutrients, 'mealData')}g</span>
                     </div>
                     <div class="col text-center">
                         <span class="border py-2 px-3 d-block mb-2">Protein: ${findNutrientAbsoluteData('protein', data.nutrition.nutrients, 'mealData')}g</span>
@@ -143,6 +143,10 @@ function findNewMeal(btn) {
     .catch(handleCatchError);
 
   updateNewMealPlanNutrients();
+  // save user's diet preference and intoleraces in case they select new
+  saveToLocalStorage('userDiet', diet);
+  saveToLocalStorage('userIntolerances', intolerances);
+
 }
 
 function writeMealPlan(mealListId) {
@@ -232,8 +236,6 @@ function getUserDiet(e) {
     intoleranceList[0].disabled = false;
     intoleranceList[1].disabled = false;
   }
-
-  saveToLocalStorage('userDiet', diet);
   return diet;
 }
 
@@ -243,7 +245,6 @@ function getUserIntolerances(e) {
   } else {
     intolerances.splice(intolerances.indexOf(this.labels[0].innerText), 1);
   }
-  saveToLocalStorage('userIntolerances', intolerances);
   return intolerances;
 }
 
@@ -252,8 +253,11 @@ function handleUserMealPreferences() {
   $('#meal-plan').removeClass('d-none');
   mealPlanDisplay.empty();
   totalNutrientsChart.empty();
-  fetchMealPlan();
   location.href = '#meal-plan-container';
+  fetchMealPlan();
+  // save user's diet preference and intolerances being used to fetch meal plan so when they return to the page later, the selected will also load accordingly to the saved meal plan
+  saveToLocalStorage('userDiet', diet);
+  saveToLocalStorage('userIntolerances', intolerances);
 }
 
 function activateDietAndIntoleranceSelection() {
